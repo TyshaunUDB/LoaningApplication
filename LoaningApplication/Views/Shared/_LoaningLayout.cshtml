@@ -11,13 +11,23 @@
         .nav-wrapper {
             box-shadow: none;
         }
+
+        .logo {
+            max-width : 100% !important;
+            height : 2.3em !important;
+        }
+
+        body {
+            font-family :;
+        }
     </style>
 </head>
 <body ng-app="LoaningApplication" ng-controller="LoaningApplicationController" bgcolor="#003049">
 
+    <div>
     <nav class="transparent z-depth-0">
         <div class="nav-wrapper">
-            <a href="#!" class="brand-logo center">Logo</a>
+                <a href="#!" class="brand-logo center"><img class="responsive-img logo" src="~/Content/TextLogo.png"></a>
             <ul class="left hide-on-med-and-down">
                 <li><a href="#">About us</a></li>
                 <li><a href="#">Components</a></li>
@@ -29,6 +39,7 @@
             </ul>
         </div>
     </nav>
+    </div>
 
     <div>
         @RenderBody()
