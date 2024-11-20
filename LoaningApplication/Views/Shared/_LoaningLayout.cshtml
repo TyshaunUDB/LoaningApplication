@@ -25,6 +25,10 @@
             background-color: #0468bb;
         }
 
+        .bg-secondary-color {
+            background-color: #F0F8FF;
+        }
+
         .primary-color {
             color: #0468bb;
         }
@@ -37,6 +41,7 @@
             border: 2px solid #0468bb;
             background-color: transparent;
             color: #0468bb;
+            font-family: Campton ExtraBold;
         }
 
         .action-button:hover {
@@ -46,38 +51,80 @@
 
         .button {
             background-color: #0468bb;
+            font-family: Campton ExtraBold;
         }
 
-            .button:hover {
-                filter: brightness(125%);
-                background-color: #0468bb;
-            }
+        .button:hover {
+            filter: brightness(125%);
+            background-color: #0468bb;
+        }
+
+        .input-field input[type=text]:focus + label {
+            color: #0468bb !important;
+        }
+
+        .input-field input[type=text]:focus {
+            border-bottom: 1px solid #0468bb !important;
+            box-shadow: 0 1px 0 0 #0468bb !important;
+        }
+
+        .input-field input[type=text].valid {
+            border-bottom: 1px solid #0468bb !important;
+            box-shadow: 0 1px 0 0 #0468bb !important;
+        }
+
+        .input-field input[type=tel]:focus + label {
+            color: #0468bb !important;
+        }
+
+        .input-field input[type=tel]:focus {
+            border-bottom: 1px solid #0468bb !important;
+            box-shadow: 0 1px 0 0 #0468bb !important;
+        }
+
+        .input-field input[type=tel].valid {
+            border-bottom: 1px solid #0468bb !important;
+            box-shadow: 0 1px 0 0 #0468bb !important;
+        }
+
+        .input-field input[type=password]:focus + label {
+            color: #0468bb !important;
+        }
+
+        .input-field input[type=password]:focus {
+            border-bottom: 1px solid #0468bb !important;
+            box-shadow: 0 1px 0 0 #0468bb !important;
+        }
+
+        .input-field input[type=password].valid {
+            border-bottom: 1px solid #0468bb !important;
+            box-shadow: 0 1px 0 0 #0468bb !important;
+        }
+
+        .input-field .prefix.active {
+            color: #0468bb !important;
+        }
+
+        .input-field .prefix {
+            color: grey !important;
+        }
+
+        .hover-scale:hover {
+            scale: 1.05;
+            -webkit-transition: all .5s;
+            -moz-transition: all .5s;
+            transition: all .5s;
+        }
     </style>
 </head>
 <body ng-app="LoaningApplication" ng-controller="LoaningApplicationController" bgcolor="#F0F8FF">
 
-    <div class="navbar-fixed">
-    <nav class="transparent z-depth-0">
-        <div class="nav-wrapper">
-                <a href="#!" class="brand-logo center"><img class="responsive-img logo" src="~/Content/TextLogo.png"></a>
-                <ul class="left hide-on-med-and-down" style="font-weight:bold;">
-                    <li><a href="#" class="primary-color">Contact Us</a></li>
-                    <li><a href="#" class="primary-color">About us</a></li>
-                    <li><a href="#" class="primary-color">Testimonials</a></li>
-                    <li><a href="#" class="primary-color">Requirements</a></li>
-                    <li><a class="waves-effect waves-light btn-large action-button" style="font-family:Campton ExtraBold;">Get a loan</a></li>
-                </ul>
-                <ul class="right hide-on-med-and-down">
-                    <li><a href="#" class="primary-color" style="font-family: Campton ExtraBold">Log in</a></li>
-                </ul>
-        </div>
-    </nav>
-    </div>
 
     <div>
         @RenderBody()
     </div>
 
+    <script src="~/Scripts/materialize.min.js"></script>
     <script src="~/Scripts/jquery-3.7.0.min.js"></script>
     <script src="~/Scripts/angular.js"></script>
     <script src="~/Scripts/AngularScripts/Module.js"></script>
