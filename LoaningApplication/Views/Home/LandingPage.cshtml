@@ -1,3 +1,126 @@
 ﻿@{
     Layout = "~/Views/Shared/_LoaningLayout.cshtml";
 }
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden; /* Prevent horizontal scroll */
+    }
+
+    .background-image {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: auto;
+        z-index: -1; /* Place the image behind everything */
+    }
+
+    .slider-value {
+        font-size: 1.5rem;
+        text-align: center;
+        font-weight: bold;
+        text-align: left;
+    }
+
+    .label {
+        font-weight: bold;
+        color: grey;
+    }
+
+    input[type=range]::-webkit-slider-thumb {
+        background-color: #0468bb;
+    }
+
+    .content {
+        position: relative;
+        z-index: 1; /* Make sure the content is above the background image */
+    }
+</style>
+
+<div class="content">
+    <h1 class="primary-color center" style="font-family:Campton Black">Fast Cash, No Hassle – Get Approved in Minutes!</h1>
+
+    <div class="row" style="margin-top: 100px">
+        <div class="col s6 m6 l6"></div>
+        <div class="col s5 m5 l5">
+            <div class="card z-depth-5" style="background-color: white; border-radius: 30px;">
+                <div class="card-content">
+                    <div class="row">
+                        <form class="col s12 m12 l12">
+                            <div class="row">
+                                <div class="col s12 m12 l12 center">
+                                    <h3 class="primary-color" style="font-family: Campton ExtraBold;">Need a loan? We got you!</h3>
+                                    <p style="margin-top: -10px">Please enter the amount you want to loan and months to pay</p>
+                                </div>
+
+                                <div class="col s12 m12 l12" style="margin-top: 30px">
+                                    <div id="slider-value" class="slider-value">Loan Amount: ₱1,000</div>
+                                    <p class="range-field">
+                                        <input type="range" id="loan-slider" min="1000" max="25000" step="500" />
+                                    </p>
+                                </div>
+                                <div class="col s6 m6 l6 label">
+                                    ₱1,000
+                                </div>
+                                <div class="col s6 m6 l6 label" style="text-align: right;">
+                                    ₱25,000
+                                </div>
+
+                                <div class="col s12 m12 l12" style="margin-top: 20px;">
+                                    <div id="months-value" class="slider-value">Months to Pay: 2 months</div>
+                                    <p class="range-field">
+                                        <input type="range" id="months-slider" min="2" max="12" step="1" />
+                                    </p>
+                                </div>
+                                <div class="col s6 m6 l6 label">
+                                    2 months
+                                </div>
+                                <div class="col s6 m6 l6 label" style="text-align: right;">
+                                    12 months
+                                </div>
+
+                                <div class="col s12 m12 l12" style="margin-top: 30px">
+                                    <p class="col s6 m6 l6 center" style="margin-top: 15px">Fixed interest rate of 3%</p>
+                                    <a class="waves-effect waves-light btn-large col s6 m6 l6 button" ng-click="loginRedirect()" style="font-family: Campton ExtraBold">Get a loan</a>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col s1 m1 l1"></div>
+    </div>
+</div>
+
+<img src="~/Content/Banner.png" class="background-image" />
+
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const loanSlider = document.getElementById("loan-slider");
+        const loanSliderValue = document.getElementById("slider-value");
+
+        const monthsSlider = document.getElementById("months-slider");
+        const monthsSliderValue = document.getElementById("months-value");
+
+        function commaFormat(number) {
+            return new Intl.NumberFormat().format(number);
+        }
+
+        loanSliderValue.innerText = `Loan Amount: ₱${commaFormat(loanSlider.value)}`;
+        loanSlider.addEventListener("input", function () {
+            loanSliderValue.innerText = `Loan Amount: ₱${commaFormat(loanSlider.value)}`;
+        });
+
+        monthsSliderValue.innerText = `Months to Pay: ${monthsSlider.value} months`;
+        monthsSlider.addEventListener("input", function () {
+            monthsSliderValue.innerText = `Months to Pay: ${monthsSlider.value} months`;
+        });
+    });
+</script>
