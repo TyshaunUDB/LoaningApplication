@@ -968,6 +968,8 @@
     <Content Include="Views\Home\LandingPage.cshtml" />
     <Content Include="Views\Shared\_LoaningLayout.cshtml" />
     <Content Include="Scripts\version.json" />
+    <Content Include="Views\Shared\_DashboardLayout.cshtml" />
+    <Content Include="Views\Home\Dashboard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
