@@ -127,6 +127,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\BackCompany.jpg" />
+    <Content Include="Content\BackGov.png" />
+    <Content Include="Content\Banner.png" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-grid.rtl.css" />
@@ -143,7 +146,16 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\DisplayPic.png" />
+    <Content Include="Content\FrontCompany.jpg" />
+    <Content Include="Content\FrontGov.png" />
     <Content Include="Content\materialize.min.css" />
+    <Content Include="Content\Payslip.png" />
+    <Content Include="Content\Requirements.png" />
+    <Content Include="Content\Step 1.png" />
+    <Content Include="Content\Step 2.png" />
+    <Content Include="Content\Step 3.png" />
+    <Content Include="Content\Team.png" />
     <Content Include="Content\TextLogo.png" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
@@ -968,6 +980,7 @@
     <Content Include="Views\Home\LandingPage.cshtml" />
     <Content Include="Views\Shared\_LoaningLayout.cshtml" />
     <Content Include="Scripts\version.json" />
+    <Content Include="Views\Home\LoginPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

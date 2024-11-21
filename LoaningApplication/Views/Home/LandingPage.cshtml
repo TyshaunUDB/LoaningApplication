@@ -1,3 +1,323 @@
 ﻿@{
     Layout = "~/Views/Shared/_LoaningLayout.cshtml";
 }
+
+<style>
+
+    .banner {
+        margin-top: -75px;
+        position: relative;
+        padding: 50px 20px;
+        text-align: center;
+    }
+
+    .banner-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: -1;
+    }
+
+    .slider-value {
+        font-size: 1.5rem;
+        text-align: center;
+        font-weight: bold;
+    }
+
+    .label {
+        font-weight: bold;
+        color: grey;
+    }
+
+    input[type=range]::-webkit-slider-thumb {
+        background-color: #0468bb;
+    }
+
+    .card {
+        background-color: white;
+        border-radius: 30px;
+        padding: 20px;
+        z-index: 1;
+    }
+
+    .step-img {
+        max-width: 100% !important;
+        height: 300px !important;
+    }
+
+    .big-img {
+        max-width: 100% !important;
+        height: 750px !important;
+    }
+
+    p {
+        font-size: 25px;
+    }
+
+    #requirements, #about {
+        background-color: #EEF3F8;
+    }
+
+    .carousel {
+        height: 750px;
+        margin-top: -250px;
+    }
+
+    .cropped-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        border-radius: 8px;
+    }
+</style>
+
+<div class="navbar-fixed">
+    <nav class="transparent z-depth-0">
+        <div class="nav-wrapper">
+            <a href="#home" class="brand-logo center">
+                <img class="responsive-img logo" src="~/Content/TextLogo.png">
+            </a>
+            <ul class="left hide-on-med-and-down" style="font-weight:bold;">
+                <li><a href="#about" class="primary-color">About us</a></li>
+                <li><a href="#testimonials" class="primary-color">Testimonials</a></li>
+                <li><a href="#requirements" class="primary-color">Requirements</a></li>
+                <li>
+                    <a href="#home" class="waves-effect waves-light btn-large action-button">Get a loan</a>
+                </li>
+            </ul>
+            <ul class="right hide-on-med-and-down">
+                <li><a class="primary-color" style="font-weight:bold;" ng-click="loginFunc()">Log in</a></li>
+            </ul>
+        </div>
+    </nav>
+</div>
+
+<div class="section banner" id="home">
+    <img src="~/Content/Banner.png" class="banner-image" alt="Banner Image" />
+    <h1 class="primary-color center" style="font-family:Campton Black;">Fast Cash, No Hassle – Get Approved in Minutes</h1>
+
+    <div class="row" style="margin-top: 50px">
+        <div class="col s6 m6 l6"></div>
+        <div class="col s5 m5 l5">
+            <div class="card z-depth-5">
+                <div class="card-content">
+                    <div class="row">
+                        <form class="col s12 m12 l12">
+                            <div class="row">
+                                <div class="col s12 m12 l12 center">
+                                    <h3 class="primary-color" style="font-family: Campton ExtraBold;">Need a loan? We got you!</h3>
+                                    <p>Please enter the amount you want to loan and months to pay</p>
+                                </div>
+
+                                <div class="col s12 m12 l12" style="margin-top: 30px;">
+                                    <div id="slider-value" class="slider-value" style="text-align: left;">Loan Amount: ₱1,000</div>
+                                    <p class="range-field">
+                                        <input type="range" id="loan-slider" min="1000" max="25000" step="500" />
+                                    </p>
+                                </div>
+                                <div class="col s6 m6 l6 label" style="text-align: left;">₱1,000</div>
+                                <div class="col s6 m6 l6 label" style="text-align: right;">₱25,000</div>
+
+                                <div class="col s12 m12 l12" style="margin-top: 20px;">
+                                    <div id="months-value" class="slider-value" style="text-align: left;">Months to Pay: 2 months</div>
+                                    <p class="range-field">
+                                        <input type="range" id="months-slider" min="2" max="12" step="1" />
+                                    </p>
+                                </div>
+                                <div class="col s6 m6 l6 label" style="text-align: left;">2 months</div>
+                                <div class="col s6 m6 l6 label" style="text-align: right;">12 months</div>
+
+                                <div class="col s12 m12 l12" style="margin-top: 30px">
+                                    <p class="col s6 m6 l6 center" style="margin-top: 15px">Fixed interest rate of 3%</p>
+                                    <a class="waves-effect waves-light btn-large col s6 m6 l6 button" ng-click="loginRedirect()">Apply now</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col s1 m1 l1"></div>
+    </div>
+</div>
+
+<div id="instructions" class="section center row">
+    <h2 class="primary-color" style="font-family: Campton Black; margin-top: 50px;">Get a loan in 3 easy steps!</h2>
+    <div class="col s4 m4 l4 hover-scale">
+        <div class="row"><span style="font-size: 3em;">1. Register</span></div>
+        <div class="row"><img src="~/Content/Step 1.png" class="step-img" /></div>
+        <div class="row"><p>Register for an account in under a minute</p></div>
+    </div>
+    <div class="col s4 m4 l4 hover-scale">
+        <div class="row"><span style="font-size: 3em;">2. Apply</span></div>
+        <div class="row"><img src="~/Content/Step 2.png" class="step-img" /></div>
+        <div class="row"><p>Make sure to have the proper documents ready and wait for approval</p></div>
+    </div>
+    <div class="col s4 m4 l4 hover-scale">
+        <div class="row"><span style="font-size: 3em;">3. Enjoy</span></div>
+        <div class="row"><img src="~/Content/Step 3.png" class="step-img" /></div>
+        <div class="row"><p>Have fun with our money!</p></div>
+    </div>
+</div>
+
+<div id="requirements" class="section row">
+    <h2 class="primary-color center" style="font-family: Campton Black; margin-top: 50px;">What documents do you need?</h2>
+    <div class="col s6 m6 l6 hover-scale">
+        <div class="row">
+            <div class="col s2 m2 l2 primary-color center" style="font-family: Campton Black; font-size: 150px;">1</div>
+            <div class="col s10 m10 l10">
+                <p>Valid Gov't ID</p>
+                <p style="font-size: 15px; color: grey; margin-top: -25px;">PHILSYS ID, SSS, GSIS, UMID, Passport, Driver’s License, Postal ID, Voter’s ID, PRC, NBI Clearance</p>
+                <div class="col s6 m6 l6">
+                    <img src="~/Content/FrontGov.png" class="" />
+                </div>
+                <div class="col s6 m6 l6">
+                    <img src="~/Content/BackGov.png" class="" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col s6 m6 l6 hover-scale">
+        <div class="row">
+            <div class="col s2 m2 l2 primary-color center" style="font-family: Campton Black; font-size: 150px; margin-top;">2</div>
+            <div class="col s10 m10 l10">
+                <p>Company ID / Certificate of Employment</p>
+                <p style="font-size: 15px; color: grey; margin-top: -25px;">Within 3 months</p>
+                <div class="col s6 m6 l6">
+                    <img src="~/Content/FrontCompany.jpg" class="" style="height: auto; width: 100%;"/>
+                </div>
+                <div class="col s6 m6 l6">
+                    <img src="~/Content/BackCompany.jpg" class="" style="height: auto; width: 100%;"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col s6 m6 l6 hover-scale">
+        <div class="row">
+            <div class="col s2 m2 l2 primary-color center" style="font-family: Campton Black; font-size: 150px; margin-top;">3</div>
+            <div class="col s10 m10 l10">
+                <p>Original Payslips</p>
+                <p style="font-size: 15px; color: grey; margin-top: -25px;">Within 2 months</p>
+                <p style="font-size: 15px; color: grey; margin-top: -15px;">Must reflect the 1st & 16th of the cut-offs of 1 month or BIR 2316 (ITR)</p>
+                <div class="col s12 m12 l12">
+                    <img src="~/Content/Payslip.png" class="" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col s6 m6 l6 hover-scale">
+        <div class="row">
+            <div class="col s2 m2 l2 primary-color center" style="font-family: Campton Black; font-size: 150px; margin-top;">4</div>
+            <div class="col s10 m10 l10">
+                <p>TIN/SSS PROOF</p>
+                <p style="font-size: 15px; color: grey;">TIN Card, SSS Card, Recent BIR 2316, Company ID, Payslip</p>
+                <p style="font-size: 15px; color: grey;">No need for proof of TIN/SSS if you already have it in the other requirements such as Gov't ID or Proof of Employment</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="testimonials" class="section row">
+    <h2 class="primary-color center" style="font-family: Campton Black; margin-top: 50px;">The people we've helped</h2>
+    <div class="carousel col s12 m12 l12">
+        <div class="col s7 m7 l7 carousel-item">
+            <div class="card-panel white z-depth-5" style="border-radius: 30px;">
+                <div class="row valign-wrapper">
+                    <div class="col s3 m3 l3">
+                        <img src="~/Content/DisplayPic.png" alt="" class="circle responsive-img">
+                    </div>
+                    <div class="col s9 m9 l9">
+                        <p>
+                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean aliquet lorem ut convallis egestas.
+                            Nullam eu sagittis eros. Duis dui tellus, tincidunt ut neque nec, condimentum iaculis leo. Mauris non
+                            mi iaculis, imperdiet nulla vel, rhoncus libero. Aenean dolor arcu, dignissim et dui ut, placerat finibus purus.
+                            Nulla ex diam, varius ut libero vitae, porttitor tristique ligula."
+                        </p>
+                        <p style="margin-top: 20px; color: grey;">Johnvon Rio Bayog</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col s7 m7 l7 carousel-item">
+            <div class="card-panel white z-depth-5" style="border-radius: 30px;">
+                <div class="row valign-wrapper">
+                    <div class="col s3 m3 l3">
+                        <img src="~/Content/DisplayPic.png" alt="" class="circle responsive-img">
+                    </div>
+                    <div class="col s9 m9 l9">
+                        <p>
+                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean aliquet lorem ut convallis egestas.
+                            Nullam eu sagittis eros. Duis dui tellus, tincidunt ut neque nec, condimentum iaculis leo. Mauris non
+                            mi iaculis, imperdiet nulla vel, rhoncus libero. Aenean dolor arcu, dignissim et dui ut, placerat finibus purus.
+                            Nulla ex diam, varius ut libero vitae, porttitor tristique ligula."
+                        </p>
+                        <p style="margin-top: 20px; color: grey;">Johnvon Rio Bayog</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col s7 m7 l7 carousel-item">
+            <div class="card-panel white z-depth-5" style="border-radius: 30px;">
+                <div class="row valign-wrapper">
+                    <div class="col s3 m3 l3">
+                        <img src="~/Content/DisplayPic.png" alt="" class="circle responsive-img">
+                    </div>
+                    <div class="col s9 m9 l9">
+                        <p>
+                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean aliquet lorem ut convallis egestas.
+                            Nullam eu sagittis eros. Duis dui tellus, tincidunt ut neque nec, condimentum iaculis leo. Mauris non
+                            mi iaculis, imperdiet nulla vel, rhoncus libero. Aenean dolor arcu, dignissim et dui ut, placerat finibus purus.
+                            Nulla ex diam, varius ut libero vitae, porttitor tristique ligula."
+                        </p>
+                        <p style="margin-top: 20px; color: grey;">Johnvon Rio Bayog</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="about" class="section row">
+    <h2 class="primary-color center" style="font-family: Campton Black; margin-top: 50px;">Who are we?</h2>
+    <div class="col s6 m6 l6">
+        <img src="~/Content/Team.png" alt="Team Image" class="responsive-img cropped-image" />
+    </div>
+    <div class="col s6 m6 l6">
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean aliquet lorem ut convallis egestas. Nullam eu sagittis eros. Duis dui tellus, tincidunt ut neque nec, condimentum iaculis leo. Mauris non mi iaculis, imperdiet nulla vel, rhoncus libero. Aenean dolor arcu, dignissim et dui ut, placerat finibus purus. Nulla ex diam, varius ut libero vitae, porttitor tristique ligula. Curabitur vitae posuere lectus. Donec hendrerit lectus dolor, sit amet iaculis ex efficitur vel. Nullam scelerisque metus vel viverra fringilla. Nullam dictum tincidunt lacus quis ultrices. Fusce consequat faucibus ligula non rutrum. Fusce lacinia cursus risus, et pretium tellus efficitur sit amet.
+        </p>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const loanSlider = document.getElementById("loan-slider");
+        const loanSliderValue = document.getElementById("slider-value");
+
+        const monthsSlider = document.getElementById("months-slider");
+        const monthsSliderValue = document.getElementById("months-value");
+
+        function commaFormat(number) {
+            return new Intl.NumberFormat().format(number);
+        }
+
+        loanSliderValue.innerText = `Loan Amount: ₱${commaFormat(loanSlider.value)}`;
+        loanSlider.addEventListener("input", function () {
+            loanSliderValue.innerText = `Loan Amount: ₱${commaFormat(loanSlider.value)}`;
+        });
+
+        monthsSliderValue.innerText = `Months to Pay: ${monthsSlider.value} months`;
+        monthsSlider.addEventListener("input", function () {
+            monthsSliderValue.innerText = `Months to Pay: ${monthsSlider.value} months`;
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var elems = document.querySelectorAll('.carousel');
+        var instances = M.Carousel.init(elems, {});
+    });
+</script>

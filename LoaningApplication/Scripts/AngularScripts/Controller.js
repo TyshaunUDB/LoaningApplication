@@ -1,7 +1,7 @@
 ﻿app.controller("LoaningApplicationController", function ($scope, LoaningApplicationService) {
 
-    $scope.test = function () {
-        alert("wow");
+    $scope.loginRedirect = function () {
+        window.location.href = "/Home/LoginPage";
     }
 
     });
