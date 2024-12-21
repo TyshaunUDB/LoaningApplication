@@ -21,5 +21,13 @@ namespace LoaningApplication.Controllers
         {
             return View();
         }
+        public ActionResult RegistrationPage()
+        {
+            return View();
+        }
+        public ActionResult OTP()
+        {
+            return View();
+        }
     }
 }

@@ -371,6 +371,8 @@
     <Content Include="Views\Home\LoginPage.cshtml" />
     <Content Include="Views\Shared\_DashboardLayout.cshtml" />
     <Content Include="Views\Home\Dashboard.cshtml" />
+    <Content Include="Views\Home\RegistrationPage.cshtml" />
+    <Content Include="Views\Home\OTP.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

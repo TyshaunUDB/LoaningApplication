@@ -1,0 +1,43 @@
+﻿@{
+    Layout = "~/Views/Shared/_LoaningLayout.cshtml";
+}
+
+
+<style>
+    .row.center {
+        margin-top: 180px;
+    }
+</style>
+<div class="row center">
+    <div class="col s4 m4 l4"></div>
+    <div class="col s4 m4 l4">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="card bg-secondary-color z-depth-5">
+                    <div class="card-content">
+                        <div class="row">
+                            <form class="col s12 m12 l12">
+                                <div class="row">
+                                    <div class="col s12 m12 l12">
+                                        <h1 style="font-family: Campton Black" class="primary-color">ONE TIME PIN</h1>
+                                        <p style="margin-top: -25px">Please enter the OTP sent to your email</p>
+                                    </div>
+                                    <div class="input-field col s12 m12 l12">
+                                        <i class="material-icons prefix">lock</i>
+                                        <input id="otp" type="text" class="validate" style="color: black" required>
+                                        <label for="otp">One Time PIN</label>
+                                    </div>
+
+                                    <div class="col s12 m12 l12">
+                                        <a class="waves-effect waves-light btn-large col s12 m12 l12 button" ng-click="otpFunc()">submit</a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col s4 m4 l4"></div>
+    </div>
+</div>
