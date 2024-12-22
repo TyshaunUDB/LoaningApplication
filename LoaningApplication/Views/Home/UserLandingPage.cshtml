@@ -73,8 +73,49 @@
         object-position: center;
         border-radius: 8px;
     }
+
+    .acc-icon {
+        margin-bottom : -14px;
+        height: 40px;
+        width: auto;
+    }
+
+    .nav-wrapper {
+        margin-right: 10px;
+        margin-left: 10px;
+    }
 </style>
 
+<div id="accDetails" class="modal">
+    <div class="modal-content">
+        <h4>Account Details</h4>
+        <p>Name:</p>
+        <p>Birthday:</p>
+        <p>Email:</p>
+        <p>Phone:</p>
+        <p>Address:</p>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">CLOSE</a>
+    </div>
+</div>
+
+<div id="logOut" class="modal">
+    <div class="modal-content">
+        <h4>Log Out</h4>
+        <p>Are you sure you want to log out?</p>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">NO</a>
+        <a href="/Home/LandingPage" class="waves-effect waves-green btn-flat">YES</a>
+    </div>
+</div>
+
+<ul id="accDropdown" class="dropdown-content">
+    <li><a href="#accDetails" class="modal-trigger">Details</a></li>
+    <li><a href="#!">Change Password</a></li>
+    <li><a href="#logOut" class="modal-trigger">Log out</a></li>
+</ul>
 <div class="navbar-fixed">
     <nav class="transparent z-depth-0">
         <div class="nav-wrapper">
@@ -90,7 +131,11 @@
                 </li>
             </ul>
             <ul class="right hide-on-med-and-down">
-                <li><a href ="/Home/LoginPage" class="primary-color" style="font-weight:bold;">Log in</a></li>
+                <li>
+                    <a href="#!" class="primary-color dropdown-trigger" data-target="accDropdown" style="font-weight:bold;">
+                        Account <img src="~/Content/account.png" class="circle acc-icon" />
+                    </a>
+                </li>
             </ul>
         </div>
     </nav>
@@ -133,7 +178,7 @@
 
                                 <div class="col s12 m12 l12" style="margin-top: 30px">
                                     <p class="col s6 m6 l6 center" style="margin-top: 15px">Fixed interest rate of 3%</p>
-                                    <a class="waves-effect waves-light btn-large col s6 m6 l6 button" href="/Home/LoginPage">Apply now</a>
+                                    <a class="waves-effect waves-light btn-large col s6 m6 l6 button" href="#" ng-click="loanApp()">Apply now</a>
                                 </div>
                             </div>
                         </form>
@@ -188,10 +233,10 @@
                 <p>Company ID / Certificate of Employment</p>
                 <p style="font-size: 15px; color: grey; margin-top: -25px;">Within 3 months</p>
                 <div class="col s6 m6 l6">
-                    <img src="~/Content/FrontCompany.jpg" class="" style="height: auto; width: 100%;"/>
+                    <img src="~/Content/FrontCompany.jpg" class="" style="height: auto; width: 100%;" />
                 </div>
                 <div class="col s6 m6 l6">
-                    <img src="~/Content/BackCompany.jpg" class="" style="height: auto; width: 100%;"/>
+                    <img src="~/Content/BackCompany.jpg" class="" style="height: auto; width: 100%;" />
                 </div>
             </div>
         </div>
@@ -319,5 +364,17 @@
     document.addEventListener('DOMContentLoaded', function () {
         var elems = document.querySelectorAll('.carousel');
         var instances = M.Carousel.init(elems, {});
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var elems = document.querySelectorAll('.dropdown-trigger');
+        var instances = M.Dropdown.init(elems, {
+            hover: false
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var elems = document.querySelectorAll('.modal');
+        var instances = M.Modal.init(elems, {});
     });
 </script>

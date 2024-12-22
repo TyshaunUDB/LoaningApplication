@@ -12,6 +12,10 @@ namespace LoaningApplication.Controllers
         {
             return View();
         }
+        public ActionResult UserLandingPage()
+        {
+            return View();
+        }
 
         public ActionResult LoginPage()
         {

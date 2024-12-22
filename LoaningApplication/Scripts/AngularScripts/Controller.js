@@ -1,15 +1,11 @@
 ﻿app.controller("LoaningApplicationController", function ($scope, LoaningApplicationService) {
-
-    $scope.loginFunc = function () {
-        window.location.href = "/Home/LoginPage";
-    }
     $scope.otpFunc = function () {
         window.location.href = "/Home/UserLandingPage";
     }
 
     $scope.loginFunc = function () {
 
-        if ($scope.userName == null || $scope.loginPass == null) {
+        if ($scope.loginEmail == null || $scope.loginPass == null) {
             Swal.fire({ title: "Error", text: "Please fill out the required fields", icon: "error" });
         }
         else {

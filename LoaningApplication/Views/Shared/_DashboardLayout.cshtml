@@ -4,10 +4,164 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
+    <link type="text/css" rel="stylesheet" href="~/Content/materialize.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        .nav-wrapper {
+            box-shadow: none;
+        }
+
+        .logo {
+            max-width: 100% !important;
+            height: 2.3em !important;
+        }
+
+        body {
+            font-family: Campton;
+        }
+
+        .bg-primary-color {
+            background-color: #0468bb;
+        }
+
+        .bg-secondary-color {
+            background-color: #F0F8FF;
+        }
+
+        .primary-color {
+            color: #0468bb !important;
+        }
+
+        .btn-large {
+            border-radius: 30px;
+        }
+
+        .action-button {
+            border: 2px solid #0468bb;
+            background-color: transparent;
+            color: #0468bb;
+            font-family: Campton ExtraBold;
+        }
+
+            .action-button:hover {
+                background-color: #0468bb;
+                color: white;
+            }
+
+        .button {
+            background-color: #0468bb;
+            font-family: Campton ExtraBold;
+        }
+
+            .button:hover {
+                filter: brightness(125%);
+                background-color: #0468bb;
+            }
+
+        .input-field input[type=text]:focus + label {
+            color: #0468bb !important;
+        }
+
+        .input-field input[type=text]:focus {
+            border-bottom: 1px solid #0468bb !important;
+            box-shadow: 0 1px 0 0 #0468bb !important;
+        }
+
+        .input-field input[type=text].valid {
+            border-bottom: 1px solid #0468bb !important;
+            box-shadow: 0 1px 0 0 #0468bb !important;
+        }
+
+        .input-field input[type=tel]:focus + label {
+            color: #0468bb !important;
+        }
+
+        .input-field input[type=tel]:focus {
+            border-bottom: 1px solid #0468bb !important;
+            box-shadow: 0 1px 0 0 #0468bb !important;
+        }
+
+        .input-field input[type=tel].valid {
+            border-bottom: 1px solid #0468bb !important;
+            box-shadow: 0 1px 0 0 #0468bb !important;
+        }
+
+        .input-field input[type=password]:focus + label {
+            color: #0468bb !important;
+        }
+
+        .input-field input[type=password]:focus {
+            border-bottom: 1px solid #0468bb !important;
+            box-shadow: 0 1px 0 0 #0468bb !important;
+        }
+
+        .input-field input[type=password].valid {
+            border-bottom: 1px solid #0468bb !important;
+            box-shadow: 0 1px 0 0 #0468bb !important;
+        }
+
+        .input-field .prefix.active {
+            color: #0468bb !important;
+        }
+
+        .input-field .prefix {
+            color: grey !important;
+        }
+
+        .hover-scale:hover {
+            scale: 1.05;
+            -webkit-transition: all .5s;
+            -moz-transition: all .5s;
+            transition: all .5s;
+        }
+
+        .sidenav {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        .sidenav .bottom-section {
+            margin-top: auto;
+            margin-bottom: -55px;
+        }
+    </style>
 </head>
-<body>
+<body ng-app="LoaningApplication" ng-controller="LoaningApplicationController">
+    <ul id="slide-out" class="sidenav sidenav-fixed">
+        <li>
+            <div class="user-view">
+                <a><img class="circle" src="~/Content/account.png"></a>
+                <a><span class="black-text name">John Doe</span></a>
+            </div>
+        </li>
+        <div class="divider"></div>
+        <li><a href="/Home/Dashboard"><i class="material-icons waves-effect primary-color">home</i>Home</a></li>
+        <li><a href="#!"><i class="material-icons waves-effect primary-color">view_list</i>Logs</a></li>
+        <li><a href="#!"><i class="material-icons waves-effect primary-color">person</i>Accounts</a></li>
+        <li><a href="#!"><i class="material-icons waves-effect primary-color">attach_money</i>Loans</a></li>
+        <li class="bottom-section">
+            <div class="divider"></div>
+            <a href="#!"><i class="material-icons waves-effect primary-color">exit_to_app</i>Log Out</a>
+        </li>
+    </ul>
+
     <div>
         @RenderBody()
     </div>
+
+    <script src="~/Scripts/materialize.min.js"></script>
+    <script src="~/Scripts/jquery-3.7.0.min.js"></script>
+    <script src="~/Scripts/angular.js"></script>
+    <script src="~/Scripts/AngularScripts/Module.js"></script>
+    <script src="~/Scripts/AngularScripts/Service.js"></script>
+    <script src="~/Scripts/AngularScripts/Controller.js"></script>
 </body>
 </html>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var elems = document.querySelectorAll('.sidenav');
+        var instances = M.Sidenav.init(elems, {});
+    });
+</script>
