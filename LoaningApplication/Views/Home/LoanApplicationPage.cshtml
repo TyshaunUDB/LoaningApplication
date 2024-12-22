@@ -1,0 +1,159 @@
+﻿@{
+    Layout = "~/Views/Shared/_LoaningLayout.cshtml";
+}
+
+
+<style>
+    .row.center {
+        margin-top: 180px;
+    }
+    .slider-value {
+        font-size: 1.5rem;
+        text-align: center;
+        font-weight: bold;
+    }
+
+    .label {
+        font-weight: bold;
+        color: grey;
+    }
+
+    input[type=range]::-webkit-slider-thumb {
+        background-color: #0468bb;
+    }
+
+    .back-link {
+        display: inline-flex;
+        align-items: center;
+        font-weight: bold;
+        font-size: 20px;
+        text-decoration: none;
+    }
+
+        .back-link i.material-icons {
+            margin-right: 5px;
+        }
+
+</style>
+<div class="row center">
+    <div class="col s3 m3 l3"></div>
+    <div class="col s6 m6 l6">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="card z-depth-5">
+                    <div class="card-content">
+                        <div class="row">
+                            <form class="col s12 m12 l12">
+                                <div class="row">
+                                    <div class="col s12 m12 l12 left-align">
+                                        <a href="/Home/UserLandingPage" class="back-link">
+                                            <i class="material-icons">arrow_back</i> Back
+                                        </a>
+                                    </div>
+
+                                    <div class="col s12 m12 l12">
+                                        <h1 style="font-family: Campton Black" class="primary-color">LOAN APPLICATION</h1>
+                                    </div>
+
+                                    <div class="col s12 m12 l12" style="margin-top: 30px;">
+                                        <div id="slider-value" class="slider-value" style="text-align: left;">Loan Amount: ₱1,000</div>
+                                        <p class="range-field">
+                                            <input type="range" id="loan-slider" min="1000" max="25000" step="500" />
+                                        </p>
+                                    </div>
+                                    <div class="col s6 m6 l6 label" style="text-align: left;">₱1,000</div>
+                                    <div class="col s6 m6 l6 label" style="text-align: right;">₱25,000</div>
+
+                                    <div class="col s12 m12 l12" style="margin-top: 20px;">
+                                        <div id="months-value" class="slider-value" style="text-align: left;">Months to Pay: 2 months</div>
+                                        <p class="range-field">
+                                            <input type="range" id="months-slider" min="2" max="12" step="1" />
+                                        </p>
+                                    </div>
+                                    <div class="col s6 m6 l6 label" style="text-align: left;">2 months</div>
+                                    <div class="col s6 m6 l6 label" style="text-align: right;">12 months</div>
+
+                                    <div class="col s12 m12 l12">
+                                        <div class="file-field input-field">
+                                            <div class="btn bg-primary-color">
+                                                <span>File</span>
+                                                <input type="file">
+                                            </div>
+                                            <div class="file-path-wrapper">
+                                                <input id="govID" class="file-path validate" type="text" placeholder="Upload your valid government ID here" required>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col s12 m12 l12">
+                                        <div class="file-field input-field">
+                                            <div class="btn bg-primary-color">
+                                                <span>File</span>
+                                                <input type="file">
+                                            </div>
+                                            <div class="file-path-wrapper">
+                                                <input id="compID" class="file-path validate" type="text" placeholder="Upload your company ID here" required>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col s12 m12 l12">
+                                        <div class="file-field input-field">
+                                            <div class="btn bg-primary-color">
+                                                <span>File</span>
+                                                <input type="file">
+                                            </div>
+                                            <div class="file-path-wrapper">
+                                                <input id="paySlip" class="file-path validate" type="text" placeholder="Upload your payslip here" required>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col s12 m12 l12">
+                                        <div class="file-field input-field">
+                                            <div class="btn bg-primary-color">
+                                                <span>File</span>
+                                                <input type="file">
+                                            </div>
+                                            <div class="file-path-wrapper">
+                                                <input id="govID" class="file-path validate" type="text" placeholder="Upload your valid government ID here" required>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col s12 m12 l12">
+                                        <a class="waves-effect waves-light btn-large col s12 m12 l12 button" ng-click="applicationFunc()">NEXT</a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col s3 m3 l3"></div>
+    </div>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const loanSlider = document.getElementById("loan-slider");
+        const loanSliderValue = document.getElementById("slider-value");
+
+        const monthsSlider = document.getElementById("months-slider");
+        const monthsSliderValue = document.getElementById("months-value");
+
+        function commaFormat(number) {
+            return new Intl.NumberFormat().format(number);
+        }
+
+        loanSliderValue.innerText = `Loan Amount: ₱${commaFormat(loanSlider.value)}`;
+        loanSlider.addEventListener("input", function () {
+            loanSliderValue.innerText = `Loan Amount: ₱${commaFormat(loanSlider.value)}`;
+        });
+
+        monthsSliderValue.innerText = `Months to Pay: ${monthsSlider.value} months`;
+        monthsSlider.addEventListener("input", function () {
+            monthsSliderValue.innerText = `Months to Pay: ${monthsSlider.value} months`;
+        });
+    })
+</script>

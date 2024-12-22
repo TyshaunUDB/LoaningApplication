@@ -2,6 +2,32 @@
     Layout = "~/Views/Shared/_DashboardLayout.cshtml";
 }
 
+<style>
+    .custom-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
 
+    .custom-btn i.material-icons {
+        margin-right: 5px;
+        font-size: 20px;
+    }
 
+</style>
 
+<div class="row">
+    <div class="col s12 m12 l12 left-align">
+        <div class="input-field inline col s3">
+            <input placeholder="Search here..." id="search" type="text" class="validate">
+        </div>
+        <a class="waves-effect waves-light btn-floating button" style="margin-top: 20px;">
+            <i class="material-icons">search</i>
+        </a>
+    </div>
+    <div class="col s12 m12 l12 left-align">
+        <a class="waves-effect waves-light btn button custom-btn" style="margin-top: 20px;">
+            <i class="material-icons">add</i> Add Something
+        </a>
+    </div>
+</div>
