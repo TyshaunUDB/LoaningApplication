@@ -50,6 +50,7 @@
             }
 
         .button {
+            border-radius: 30px;
             background-color: #0468bb;
             font-family: Campton ExtraBold;
         }
@@ -126,9 +127,25 @@
             margin-top: auto;
             margin-bottom: -55px;
         }
+
+        body {
+            padding-left: 300px;
+        }
     </style>
 </head>
 <body ng-app="LoaningApplication" ng-controller="LoaningApplicationController">
+
+    <div id="logOut" class="modal">
+        <div class="modal-content">
+            <h4>Log Out</h4>
+            <p>Are you sure you want to log out?</p>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-green btn-flat">NO</a>
+            <a href="/Home/LandingPage" class="waves-effect waves-green btn-flat">YES</a>
+        </div>
+    </div>
+
     <ul id="slide-out" class="sidenav sidenav-fixed">
         <li>
             <div class="user-view">
@@ -138,12 +155,23 @@
         </li>
         <div class="divider"></div>
         <li><a href="/Home/Dashboard"><i class="material-icons waves-effect primary-color">home</i>Home</a></li>
-        <li><a href="#!"><i class="material-icons waves-effect primary-color">view_list</i>Logs</a></li>
-        <li><a href="#!"><i class="material-icons waves-effect primary-color">person</i>Accounts</a></li>
+        <div class="divider"></div>
+        <li><a class="subheader">ACCOUNT</a></li>
+        <li><a href="#!"><i class="material-icons waves-effect primary-color">supervisor_account</i>Accounts</a></li>
+        <li><a href="#!"><i class="material-icons waves-effect primary-color">equalizer</i>Status</a></li>
+        <li><a href="#!"><i class="material-icons waves-effect primary-color">person</i>Roles</a></li>
+        <div class="divider"></div>
+        <li><a class="subheader">LOAN</a></li>
         <li><a href="#!"><i class="material-icons waves-effect primary-color">attach_money</i>Loans</a></li>
+        <li><a href="#!"><i class="material-icons waves-effect primary-color">monetization_on</i>Payments</a></li>
+        <li><a href="#!"><i class="material-icons waves-effect primary-color">contact_mail</i>Applications</a></li>
+        <li><a href="#!"><i class="material-icons waves-effect primary-color">account_balance_wallet</i>Disbursements</a></li>
+        <li><a href="#!"><i class="material-icons waves-effect primary-color">equalizer</i>Status</a></li>
+        <div class="divider"></div>
+        <li><a href="#!"><i class="material-icons waves-effect primary-color">view_list</i>Logs</a></li>
         <li class="bottom-section">
             <div class="divider"></div>
-            <a href="#!"><i class="material-icons waves-effect primary-color">exit_to_app</i>Log Out</a>
+            <a href="#logOut" class="modal-trigger"><i class="material-icons waves-effect primary-color">exit_to_app</i>Log Out</a>
         </li>
     </ul>
 
@@ -162,6 +190,12 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         var elems = document.querySelectorAll('.sidenav');
-        var instances = M.Sidenav.init(elems, {});
+        var instances = M.Sidenav.init(elems, {
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var elems = document.querySelectorAll('.modal');
+        var instances = M.Modal.init(elems, {});
     });
 </script>
