@@ -155,9 +155,20 @@
         </li>
         <div class="divider"></div>
         <li><a href="/Home/Dashboard"><i class="material-icons waves-effect primary-color">home</i>Home</a></li>
-        <li><a href="#!"><i class="material-icons waves-effect primary-color">view_list</i>Logs</a></li>
-        <li><a href="#!"><i class="material-icons waves-effect primary-color">person</i>Accounts</a></li>
+        <div class="divider"></div>
+        <li><a class="subheader">ACCOUNT</a></li>
+        <li><a href="#!"><i class="material-icons waves-effect primary-color">supervisor_account</i>Accounts</a></li>
+        <li><a href="#!"><i class="material-icons waves-effect primary-color">equalizer</i>Status</a></li>
+        <li><a href="#!"><i class="material-icons waves-effect primary-color">person</i>Roles</a></li>
+        <div class="divider"></div>
+        <li><a class="subheader">LOAN</a></li>
         <li><a href="#!"><i class="material-icons waves-effect primary-color">attach_money</i>Loans</a></li>
+        <li><a href="#!"><i class="material-icons waves-effect primary-color">monetization_on</i>Payments</a></li>
+        <li><a href="#!"><i class="material-icons waves-effect primary-color">contact_mail</i>Applications</a></li>
+        <li><a href="#!"><i class="material-icons waves-effect primary-color">account_balance_wallet</i>Disbursements</a></li>
+        <li><a href="#!"><i class="material-icons waves-effect primary-color">equalizer</i>Status</a></li>
+        <div class="divider"></div>
+        <li><a href="#!"><i class="material-icons waves-effect primary-color">view_list</i>Logs</a></li>
         <li class="bottom-section">
             <div class="divider"></div>
             <a href="#logOut" class="modal-trigger"><i class="material-icons waves-effect primary-color">exit_to_app</i>Log Out</a>
@@ -181,5 +192,10 @@
         var elems = document.querySelectorAll('.sidenav');
         var instances = M.Sidenav.init(elems, {
         });
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var elems = document.querySelectorAll('.modal');
+        var instances = M.Modal.init(elems, {});
     });
 </script>
