@@ -9,7 +9,32 @@
             Swal.fire({ title: "Error", text: "Please fill out the required fields", icon: "error" });
         }
         else {
-            window.location.href = "/Home/UserLandingPage";
+            var email = $scope.loginEmail;
+            var pass = $scope.loginPass;
+
+            var postData = LoaningApplicationService.logIn(email, pass);
+            postData.then(function (ReturnedData) {
+                var returnValue = Number(ReturnedData.data);
+                if (returnValue == 0) {
+                    Swal.fire({ title: "Error", text: "Invalid username or password", icon: "error" });
+                }
+                else if (returnValue == 1) {
+                    $scope.loginSession();
+                    window.location.href = "/Home/UserLandingPage";
+                }
+                else if (returnValue == 2) {
+                    $scope.loginSession();
+                    window.location.href = "/Home/Dashboard";
+                }
+                else if (returnValue == 3) {
+                    $scope.loginSession();
+                    window.location.href = "/Home/EmployeeDashboard";
+                }
+                else if (returnValue == 4) {
+                    $scope.loginSession();
+                    window.location.href = "/Home/LenderDashboard";
+                }
+            });
         }
     }
 
@@ -57,30 +82,157 @@
             Swal.fire({ title: "Error", text: "Passwords do not match!", icon: "error" });
         }
         else {
-            window.location.href = "/Home/OTP";
+            LoaningApplicationService.emailExist($scope.uEmail).then(function (ReturnedData) {
+                var returnValue = Number(ReturnedData.data);
+                if (returnValue == 1) {
+                    Swal.fire({ title: "Error", text: "Email already exists!", icon: "error" });
+                }
+                else {
+                    var uFirstName = $scope.fName;
+                    var uMiddleName = $scope.mName;
+                    var uLastName = $scope.lName;
+                    var uEmail = $scope.uEmail;
+                    var uPhone = $scope.uPhone;
+                    var uBirthdate = $scope.uBirthdate;
+                    var uAddress = $scope.uAddress;
+                    var uPassword = $scope.uPass;
+
+                    var postData = LoaningApplicationService.regUser(uFirstName, uMiddleName, uLastName, uEmail, uPhone, uBirthdate, uAddress, uPassword);
+
+                    $scope.regSession();
+
+                    window.location.href = "/Home/UserLandingPage";
+                }
+            });
         }
     }
 
-    $scope.regFunc = function () {
+    var loginInfo = [];
 
-        var userSearch = userInfo.find(Search => Search.Email === $scope.uEmail);
+    $scope.loginSession = function () {
+        loginInfo.push($scope.loginEmail);
+        var sessionString = (loginInfo)
+        sessionStorage.setItem("logged in", sessionString);
+    }
 
-        if (userSearch == undefined) {
-            userInfo.push({
-                Firstname: $scope.fName,
-                Middlename: $scope.mName,
-                Lastname: $scope.lName,
-                Email: $scope.uEmail,
-                Phone: $scope.uPhone,
-                Address: $scope.uAddress,
-                Username: $scope.uEmail,
-                Password: $scope.uPass,
+    $scope.regSession = function () {
+        loginInfo.push($scope.loginEmail);
+        var sessionString = (loginInfo)
+        sessionStorage.setItem("logged in", sessionString);
+    }
+
+    $scope.logoutSession = function () {
+        sessionStorage.removeItem("logged in");
+    }
+
+    $scope.getUsers = function () {
+        LoaningApplicationService.getUsers().then(function (response) {
+            if (response.data.success) {
+                $scope.users = response.data.data.map(accounts => ({
+                    AccountID: accounts.accountID,
+                    FirstName: accounts.firstName,
+                    MiddleName: accounts.middleName,
+                    LastName: accounts.lastName,
+                    EmailAddress: accounts.emailAddress,
+                    PhoneNumber: accounts.phoneNumber,
+                    BirthDate: new Date(parseInt(accounts.birthDate.match(/\d+/)[0])).toLocaleString('en-PH', {
+                        month: 'short',
+                        day: 'numeric',
+                        year: 'numeric'
+                    }),
+                    Address: accounts.Address,
+                    RoleName: accounts.RoleName,
+                    StatusName: accounts.StatusName,
+                    UpdateAt: new Date(parseInt(accounts.updateAt.match(/\d+/)[0])).toLocaleString('en-PH', {
+                        month: 'short',
+                        day: 'numeric',
+                        year: 'numeric',
+                        hour: 'numeric',
+                        minute: 'numeric',
+                        hour12: true
+                    }),
+                    CreateAt: new Date(parseInt(accounts.createAt.match(/\d+/)[0])).toLocaleString('en-PH', {
+                        month: 'short',
+                        day: 'numeric',
+                        year: 'numeric',
+                        hour: 'numeric',
+                        minute: 'numeric',
+                        hour12: true
+                    }),
+                }));
+                initAccTable();
+            } else {
+                console.error('Failed to load accounts:', response.data.message);
+            }
+        }).catch(error => {
+            console.error('Error loading accounts:', error);
+        });
+    };
+
+    function initAccTable() {
+        if (typeof $ !== 'undefined' && $.fn.DataTable) {
+            setTimeout(function () {
+                $('#accountsTable').DataTable({
+                    destroy: true,
+                    paging: true,
+                    searching: true,
+                    ordering: true,
+                    responsive: true,
+                    autoWidth: false,
+                    fixedHeader: true,
+                    pageLength: 50,
+                    columns: [
+                        { title: "Account ID" },
+                        { title: "First Name" },
+                        { title: "Middle Name" },
+                        { title: "Last Name" },
+                        { title: "Email" },
+                        { title: "Contact" },
+                        { title: "Birthday" },
+                        { title: "Address" },
+                        { title: "Role" },
+                        { title: "Status" },
+                        { title: "Last Updated" },
+                        { title: "Created" },
+                        { title: "Action" }
+                    ],
+                })
             });
-            var sessionString = JSON.stringify(userInfo)
-            sessionStorage.setItem("credentials", sessionString);
-            window.location.href = "/Home/LoginPage";
         } else {
-            Swal.fire({ title: "Error", text: "Email already exists!", icon: "error" });
+            console.error('jQuery or DataTables is not loaded.');
         }
+    }
+
+    $scope.editAcc = function (account) {
+        $scope.editAccID = account.AccountID;
+        $scope.editFirstName = account.FirstName;
+        $scope.editMiddleName = account.MiddleName;
+        $scope.editLastName = account.LastName;
+        $scope.editEmail = account.EmailAddress;
+        $scope.editPhone = account.PhoneNumber;
+        $scope.editBirthday = account.BirthDate;
+        $scope.editAddress = account.Address;
+
+        const modalElement = document.getElementById('editAccModal');
+        const modalInstance = M.Modal.init(modalElement);
+        modalInstance.open();
+
+        setTimeout(() => {
+            M.updateTextFields();
+        }, 0);
+    }
+
+    $scope.updateAcc = function () {
+        var editAccID = $scope.editAccID;
+        var editFirstName = $scope.editFirstName;
+        var editMiddleName = $scope.editMiddleName;
+        var editLastName = $scope.editLastName;
+        var editPhone = $scope.editPhone;
+        var editBirthday = $scope.editBirthday;
+        var editAddress = $scope.editAddress;
+
+        var postData = LoaningApplicationService.updateAcc(editAccID, editFirstName, editMiddleName, editLastName, editPhone, editBirthday, editAddress);
+
+        window.location.href = "/Home/Accounts";
     }
 });

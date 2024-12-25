@@ -405,6 +405,7 @@
     <Content Include="Views\Home\OTP.cshtml" />
     <Content Include="Views\Home\UserLandingPage.cshtml" />
     <Content Include="Views\Home\LoanApplicationPage.cshtml" />
+    <Content Include="Views\Home\Accounts.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

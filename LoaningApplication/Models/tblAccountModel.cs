@@ -11,9 +11,10 @@ namespace LoaningApplication.Models
         public int roleID { get; set; }
         public int statusID { get; set; }
         public string firstName { get; set; }
+        public string middleName { get; set; }
         public string lastName { get; set; }
         public string emailAddress { get; set; }
-        public int phoneNumber { get; set; }
+        public string phoneNumber { get; set; }
         public DateTime birthDate { get; set; }
         public string Address { get; set; }
         public string password { get; set; }
