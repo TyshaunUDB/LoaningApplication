@@ -57,4 +57,15 @@
         });
         return response;
     };
+
+    this.deleteAcc = function (deleteAccID) {
+        var response = $http({
+            method: "post",
+            url: "/Home/deleteAcc",
+            params: {
+                deleteAccID: deleteAccID
+            }
+        });
+        return response;
+    };
 });

@@ -235,4 +235,10 @@
 
         window.location.href = "/Home/Accounts";
     }
+
+    $scope.deleteAcc = function () {
+        var deleteAccID = $scope.editAccID;
+        var postData = LoaningApplicationService.deleteAcc(deleteAccID);
+        window.location.href = "/Home/Accounts";
+    }
 });

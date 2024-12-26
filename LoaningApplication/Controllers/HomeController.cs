@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 
 namespace LoaningApplication.Controllers
@@ -108,7 +109,7 @@ namespace LoaningApplication.Controllers
             {
                 using (var db = new LoaningContext())
                 {
-                    var accounts = db.tbaccount.Select(a => new
+                    var accounts = db.tbaccount.Where(x => x.statusID != 2).Select(a => new
                     {
                         accountID = a.accountID,
                         a.firstName,
@@ -146,6 +147,20 @@ namespace LoaningApplication.Controllers
                     exists.phoneNumber = editPhone;
                     exists.birthDate = editBDay;
                     exists.Address = editAdress;
+                    exists.updateAt = DateTime.Now;
+                    db.SaveChanges();
+                }
+            }
+        }
+
+        public void deleteAcc(int deleteAccID)
+        {
+            using (var db = new LoaningContext())
+            {
+                var exists = db.tbaccount.Where(x => x.accountID == deleteAccID).FirstOrDefault();
+                if (exists != null)
+                {
+                    exists.statusID = 2;
                     exists.updateAt = DateTime.Now;
                     db.SaveChanges();
                 }
