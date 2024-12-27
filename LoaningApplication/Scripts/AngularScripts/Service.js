@@ -103,4 +103,91 @@
             url: '/Home/getLoans'
         });
     };
+
+    this.paymentCheck = function (getInfo, paymentLoanID) {
+        return $http.get("/Home/paymentCheck", { params: { email: getInfo, PaymentLoanID: paymentLoanID } });
+    };
+
+    this.payment = function (formData) {
+        return $http.post("/Home/payment", formData, {
+            headers: { 'Content-Type': undefined },
+            transformRequest: angular.identity
+        });
+    };
+
+    this.updateLoan = function (editLoanID, editStatusID) {
+        var response = $http({
+            method: "post",
+            url: "/Home/updateLoan",
+            params: {
+                EditLoanID: editLoanID,
+                EditStatusID: editStatusID
+            }
+        });
+        return response;
+    };
+
+    this.getStatuses = function () {
+        return $http({
+            method: 'GET',
+            url: '/Home/getStatuses'
+        });
+    };
+    this.getaccStat = function () {
+        return $http({
+            method: 'GET',
+            url: '/Home/GetAccstatus'
+        });
+    };
+
+    this.updateAccStat = function (editAccStatID, editAccStatName) {
+        var response = $http({
+            method: "post",
+            url: "/Home/updateAccStat",
+            params: {
+                editID: editAccStatID,
+                editFName: editAccStatName,
+            }
+        });
+        return response;
+    };
+
+    this.deleteAccStat = function (deleteAccStatusID) {
+        var response = $http({
+            method: "post",
+            url: "/Home/deleteAccStat",
+            params: {
+                deleteAccStatusID: deleteAccStatusID
+            }
+        });
+        return response;
+    };
+
+    this.getRoles = function () {
+        return $http({
+            method: 'GET',
+            url: '/Home/GetRoles'
+        });
+    };
+
+    this.getDisbursement = function () {
+        return $http({
+            method: 'GET',
+            url: '/Home/GetDisbursement'
+        });
+    };
+
+    this.getLoanStatus = function () {
+        return $http({
+            method: 'GET',
+            url: '/Home/GetLoanStatus'
+        });
+    };
+
+    this.getLogs = function () {
+        return $http({
+            method: 'GET',
+            url: '/Home/GetLogs'
+        });
+    };
 });

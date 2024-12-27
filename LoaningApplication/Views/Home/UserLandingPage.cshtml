@@ -93,17 +93,17 @@
             <div class="file-field input-field">
                 <div class="btn bg-primary-color">
                     <span>File</span>
-                    <input type="file">
+                    <input type="file" ng-model="paymentProof" onchange="angular.element(this).scope().getPaymentProof(this)" required>
                 </div>
                 <div class="file-path-wrapper">
-                    <input id="compID" class="file-path validate" type="text" placeholder="Upload proof of payment here" required>
+                    <input id="compID" class="file-path validate" type="text" placeholder="Upload proof of payment here">
                 </div>
             </div>
         </div>
     </div>
     <div class="modal-footer">
         <a href="#!" class="modal-close waves-effect waves-green btn-flat">CLOSE</a>
-        <a href="#!" class="waves-effect waves-green btn-flat">SUBMIT</a>
+        <a href="#!" class="waves-effect waves-green btn-flat" ng-click="payment(loanInformation)">SUBMIT</a>
     </div>
 </div>
 
@@ -122,18 +122,18 @@
 </div>
 
 <div id="myLoan" class="modal">
-    <div class="modal-content">
+    <div class="modal-content" ng-init="loanInfo()">
         <h4>My Loan</h4>
-        <p>Total Loan Amount:</p>
-        <p>Pending:</p>
-        <p>Total Loan Paid:</p>
-        <p>Next Payment:</p>
-        <p>Next Due:</p>
-        <p>Payment Status:</p>
+        <input type="hidden" name="name" value="{{loanInformation[0].LoanID}}" />
+        <p><b>Total Loan Amount:</b> Php{{loanInformation[0].LoanAmount}}</p>
+        <p><b>Pending:</b> Php{{loanInformation[0].Pending}}</p>
+        <p><b>Total Loan Paid:</b> Php{{loanInformation[0].AmountPaid}}</p>
+        <p><b>Monthly Payment:</b> Php{{loanInformation[0].PaymentMonth}}</p>
+        <p><b>Next Due:</b> {{loanInformation[0].DueDate}}</p>
     </div>
     <div class="modal-footer">
         <a href="#!" class="modal-close waves-effect waves-green btn-flat">CLOSE</a>
-        <a href="#paymentModal" class="modal-trigger modal-close waves-effect waves-green btn-flat">PAY NOW</a>
+        <a class="modal-close waves-effect waves-green btn-flat" ng-click="openPayment(loanInformation)">PAY NOW</a>
     </div>
 </div>
 
@@ -149,7 +149,7 @@
 </div>
 
 <ul id="accDropdown" class="dropdown-content">
-    <li><a href="#myLoan" class="primary-color modal-trigger">My Loan</a></li>
+    <li><a class="primary-color" ng-click="checkLoan()">My Loan</a></li>
     <li><a href="#accDetails" class="primary-color modal-trigger">Account Details</a></li>
     <li><a href="#logOut" class="primary-color modal-trigger">Log out</a></li>
 </ul>
@@ -362,16 +362,14 @@
             <div class="card-panel white z-depth-5" style="border-radius: 30px;">
                 <div class="row valign-wrapper">
                     <div class="col s3 m3 l3">
-                        <img src="~/Content/DisplayPic.png" alt="" class="circle responsive-img">
+                        <img src="~/Content/TestimonialPic.jpg" alt="" class="circle responsive-img">
                     </div>
                     <div class="col s9 m9 l9">
                         <p>
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean aliquet lorem ut convallis egestas.
-                            Nullam eu sagittis eros. Duis dui tellus, tincidunt ut neque nec, condimentum iaculis leo. Mauris non
-                            mi iaculis, imperdiet nulla vel, rhoncus libero. Aenean dolor arcu, dignissim et dui ut, placerat finibus purus.
-                            Nulla ex diam, varius ut libero vitae, porttitor tristique ligula."
+                            "Flash Cash is a lifesaver! I needed help covering some bills before my next paycheck, and their approval process was as quick as advertised.
+                            The customer service team was friendly and professional, making the whole experience even better. Thank you, Flash Cash!"
                         </p>
-                        <p style="margin-top: 20px; color: grey;">Johnvon Rio Bayog</p>
+                        <p style="margin-top: 20px; color: grey;">Jessica L.</p>
                     </div>
                 </div>
             </div>
@@ -384,12 +382,10 @@
                     </div>
                     <div class="col s9 m9 l9">
                         <p>
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean aliquet lorem ut convallis egestas.
-                            Nullam eu sagittis eros. Duis dui tellus, tincidunt ut neque nec, condimentum iaculis leo. Mauris non
-                            mi iaculis, imperdiet nulla vel, rhoncus libero. Aenean dolor arcu, dignissim et dui ut, placerat finibus purus.
-                            Nulla ex diam, varius ut libero vitae, porttitor tristique ligula."
+                            "I’ve tried other loan services before, but nothing compares to Flash Cash. The 'No Hassle' part of their slogan
+                            is 100% true—no long forms, no waiting for days. It was fast, easy, and stress-free. Highly recommend it to anyone who needs fast financial help!"
                         </p>
-                        <p style="margin-top: 20px; color: grey;">Johnvon Rio Bayog</p>
+                        <p style="margin-top: 20px; color: grey;">Mike R.</p>
                     </div>
                 </div>
             </div>
@@ -398,16 +394,14 @@
             <div class="card-panel white z-depth-5" style="border-radius: 30px;">
                 <div class="row valign-wrapper">
                     <div class="col s3 m3 l3">
-                        <img src="~/Content/DisplayPic.png" alt="" class="circle responsive-img">
+                        <img src="~/Content/TestimonialPic2.jpg" alt="" class="circle responsive-img">
                     </div>
                     <div class="col s9 m9 l9">
                         <p>
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean aliquet lorem ut convallis egestas.
-                            Nullam eu sagittis eros. Duis dui tellus, tincidunt ut neque nec, condimentum iaculis leo. Mauris non
-                            mi iaculis, imperdiet nulla vel, rhoncus libero. Aenean dolor arcu, dignissim et dui ut, placerat finibus purus.
-                            Nulla ex diam, varius ut libero vitae, porttitor tristique ligula."
+                            "I was in a bind and needed money fast to cover an unexpected car repair. Flash Cash came through for me in no time!
+                            The application process was super simple, and I had the funds in my account within minutes. I’ll definitely use them again if I ever need quick cash."
                         </p>
-                        <p style="margin-top: 20px; color: grey;">Johnvon Rio Bayog</p>
+                        <p style="margin-top: 20px; color: grey;">Sarah T.</p>
                     </div>
                 </div>
             </div>
@@ -422,7 +416,10 @@
     </div>
     <div class="col s6 m6 l6">
         <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean aliquet lorem ut convallis egestas. Nullam eu sagittis eros. Duis dui tellus, tincidunt ut neque nec, condimentum iaculis leo. Mauris non mi iaculis, imperdiet nulla vel, rhoncus libero. Aenean dolor arcu, dignissim et dui ut, placerat finibus purus. Nulla ex diam, varius ut libero vitae, porttitor tristique ligula. Curabitur vitae posuere lectus. Donec hendrerit lectus dolor, sit amet iaculis ex efficitur vel. Nullam scelerisque metus vel viverra fringilla. Nullam dictum tincidunt lacus quis ultrices. Fusce consequat faucibus ligula non rutrum. Fusce lacinia cursus risus, et pretium tellus efficitur sit amet.
+            Welcome to Flash Cash, where we believe financial solutions should be quick, simple, and stress-free. Our mission is to help you navigate
+            life's unexpected expenses with ease. With our slogan, Fast Cash, No Hassle – Get Approved in Minutes, we’re dedicated to providing a streamlined
+            loan application process that gets you the funds you need when you need them most. Whether it's an emergency, an important purchase, or just
+            bridging a financial gap, Flash Cash is here to offer you fast, reliable support—without the red tape. Experience financial freedom on your terms, today!
         </p>
     </div>
 </div>

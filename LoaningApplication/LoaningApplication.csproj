@@ -241,6 +241,8 @@
     <Content Include="Content\Step 2.png" />
     <Content Include="Content\Step 3.png" />
     <Content Include="Content\Team.png" />
+    <Content Include="Content\TestimonialPic.jpg" />
+    <Content Include="Content\TestimonialPic2.jpg" />
     <Content Include="Content\TextLogo.png" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
@@ -405,6 +407,11 @@
     <Content Include="Views\Home\LoanApplicationPage.cshtml" />
     <Content Include="Views\Home\Accounts.cshtml" />
     <Content Include="Views\Home\Loans.cshtml" />
+    <Content Include="Views\Home\AccountStatus.cshtml" />
+    <Content Include="Views\Home\Disbursement.cshtml" />
+    <Content Include="Views\Home\LoanStatus.cshtml" />
+    <Content Include="Views\Home\Logs.cshtml" />
+    <Content Include="Views\Home\Roles.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

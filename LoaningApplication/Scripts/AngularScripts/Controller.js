@@ -24,7 +24,7 @@
                 }
                 else if (returnValue == 2) {
                     $scope.loginSession();
-                    window.location.href = "/Home/Dashboard";
+                    window.location.href = "/Home/Accounts";
                 }
                 else if (returnValue == 3) {
                     $scope.loginSession();
@@ -289,18 +289,17 @@
         var getInfo = sessionStorage.getItem("logged in");
         LoaningApplicationService.loanInfo(getInfo).then(function (response) {
             if (response.data.success) {
-                $scope.loggedinusers = response.data.data.map(loggedInAcc => ({
-                    FirstName: loggedInAcc.firstName,
-                    MiddleName: loggedInAcc.middleName,
-                    LastName: loggedInAcc.lastName,
-                    EmailAddress: loggedInAcc.emailAddress,
-                    PhoneNumber: loggedInAcc.phoneNumber,
-                    BirthDate: new Date(parseInt(loggedInAcc.birthDate.match(/\d+/)[0])).toLocaleString('en-PH', {
+                $scope.loanInformation = response.data.data.map(loggedinLoan => ({
+                    LoanID: loggedinLoan.loanID,
+                    LoanAmount: loggedinLoan.loanAmount,
+                    Pending: loggedinLoan.Pending,
+                    PaymentMonth: loggedinLoan.paymentMonth,
+                    AmountPaid: loggedinLoan.amountPaid,
+                    DueDate: new Date(parseInt(loggedinLoan.dueDate.match(/\d+/)[0])).toLocaleString('en-PH', {
                         month: 'short',
                         day: 'numeric',
                         year: 'numeric'
-                    }),
-                    Address: loggedInAcc.Address
+                    })
                 }));
             } else {
                 console.error('Failed to load account data:', response.data.message);
@@ -355,9 +354,10 @@
         LoaningApplicationService.getLoans().then(function (response) {
             if (response.data.success) {
                 $scope.loans = response.data.data.map(loanList => ({
-                    LoanID: loanList.accountID,
-                    Email: loanList.accountID,
-                    Status: loanList.statusID,
+                    LoanID: loanList.loanID,
+                    StatusIDStatusID: loanList.statusID,
+                    Email: loanList.Applicant,
+                    Status: loanList.StatusName,
                     LoanAmount: loanList.loanAmount,
                     LoanTerm: loanList.loanTerm,
                     StartDate: new Date(parseInt(loanList.startDate.match(/\d+/)[0])).toLocaleString('en-PH', {
@@ -441,4 +441,397 @@
             M.Materialbox.init(document.querySelectorAll('.materialboxed'));
         }, 0);
     });
+
+    $scope.checkLoan = function () {
+
+        var getInfo = sessionStorage.getItem("logged in");
+        LoaningApplicationService.loanExist(getInfo).then(function (ReturnedData) {
+            var returnValue = Number(ReturnedData.data);
+            if (returnValue == 1) {
+                const modalElement = document.getElementById('myLoan');
+                const modalInstance = M.Modal.init(modalElement);
+                modalInstance.open();
+            }
+            else {
+                Swal.fire({ title: "Error", text: "You don't have any active loans!", icon: "error" });
+            }
+        });
+    }
+
+    $scope.openPayment = function (loanInformation) {
+        var paymentLoanID = loanInformation[0].LoanID;
+        var getInfo = sessionStorage.getItem("logged in");
+
+        LoaningApplicationService.paymentCheck(getInfo, paymentLoanID).then(function (ReturnedData) {
+            var returnValue = Number(ReturnedData.data);
+            if (returnValue == 1) {
+                Swal.fire({ title: "Error", text: "You already paid for this month!", icon: "error" });
+            }
+            else if (returnValue == 2) {
+                Swal.fire({ title: "Error", text: "Your loan is still pending for approval!", icon: "error" });
+            }
+            else {
+                const modalElement = document.getElementById('paymentModal');
+                const modalInstance = M.Modal.init(modalElement);
+                modalInstance.open();
+            }
+        });
+    }
+
+    $scope.getPaymentProof = function (input) {
+        $scope.$apply(function () {
+            $scope.paymentProof = input.files[0];
+        });
+    };
+
+    $scope.payment = function (loanInformation) {
+        var formData = new FormData();
+
+        formData.append("email", sessionStorage.getItem("logged in"));
+        formData.append("LoanID", loanInformation[0].LoanID);
+        formData.append("PaymentProof", $scope.paymentProof);
+
+        LoaningApplicationService.payment(formData).then(function (response) {
+            window.location.href = "/Home/UserLandingPage";
+        }).catch(function (error) {
+            console.error('Error submitting loan application:', error);
+        });
+    }
+
+    $scope.updateLoan = function (list) {
+        var editLoanID = list.LoanID;
+        var editStatusID = list.StatusID;
+
+        var postData = LoaningApplicationService.updateLoan(editLoanID, editStatusID);
+
+        window.location.href = "/Home/Loans";
+    }
+    $scope.deleteAcc = function () {
+        var deleteAccID = $scope.editAccID;
+        var postData = LoaningApplicationService.deleteAcc(deleteAccID);
+        window.location.href = "/Home/Accounts";
+    }
+
+    $scope.getaccStat = function () {
+        LoaningApplicationService.getaccStat().then(function (response) {
+            if (response.data.success) {
+                $scope.accstat = response.data.data.map(accountstatus => ({
+                    StatusID: accountstatus.statusID,
+                    StatusName: accountstatus.statusName,
+                    UpdateAt: new Date(parseInt(accountstatus.updateAt.match(/\d+/)[0])).toLocaleString('en-PH', {
+                        month: 'short',
+                        day: 'numeric',
+                        year: 'numeric',
+                        hour: 'numeric',
+                        minute: 'numeric',
+                        hour12: true
+                    }),
+                    CreateAt: new Date(parseInt(accountstatus.createAt.match(/\d+/)[0])).toLocaleString('en-PH', {
+                        month: 'short',
+                        day: 'numeric',
+                        year: 'numeric',
+                        hour: 'numeric',
+                        minute: 'numeric',
+                        hour12: true
+                    }),
+                }));
+                initAccStatTable();
+            } else {
+                console.error('Failed to load accounts:', response.data.message);
+            }
+        }).catch(error => {
+            console.error('Error loading accounts:', error);
+        });
+    };
+
+    function initAccStatTable() {
+        if (typeof $ !== 'undefined' && $.fn.DataTable) {
+            setTimeout(function () {
+                $('#accountstatusTable').DataTable({
+                    destroy: true,
+                    paging: true,
+                    searching: true,
+                    ordering: true,
+                    responsive: true,
+                    autoWidth: false,
+                    fixedHeader: true,
+                    pageLength: 50,
+                    columns: [
+                        { title: "Status ID" },
+                        { title: "Status Name" },
+                        { title: "Last Updated" },
+                        { title: "Created" },
+                        { title: "Action" }
+                    ],
+                })
+            });
+        } else {
+            console.error('jQuery or DataTables is not loaded.');
+        }
+    }
+
+    $scope.editAccStat = function (accountstatus) {
+        $scope.editAccStatID = accountstatus.StatusID;
+        $scope.editAccStatName = accountstatus.StatusName;
+
+        const modalElement = document.getElementById('editAccStatModal');
+        const modalInstance = M.Modal.init(modalElement);
+        modalInstance.open();
+
+        setTimeout(() => {
+            M.updateTextFields();
+        }, 0);
+    }
+
+    $scope.updateAccStat = function () {
+        var editAccStatID = $scope.editAccStatID;
+        var editAccStatName = $scope.editAccStatName;
+
+        var postData = LoaningApplicationService.updateAccStat(editAccStatID, editAccStatName);
+
+        window.location.href = "/Home/AccountStatus";
+    }
+
+    $scope.deleteAccStat = function () {
+        var deleteAccStatID = $scope.editAccStatID;
+        var postData = LoaningApplicationService.deleteAccStatID(deleteAccStatID);
+        window.location.href = "/Home/AccountStatus";
+    }
+
+    $scope.getRoles = function () {
+        LoaningApplicationService.getRoles().then(function (response) {
+            if (response.data.success) {
+                $scope.role = response.data.data.map(roles => ({
+                    RoleID: roles.roleID,
+                    RoleName: roles.roleName,
+                    UpdateAt: new Date(parseInt(roles.updateAt.match(/\d+/)[0])).toLocaleString('en-PH', {
+                        month: 'short',
+                        day: 'numeric',
+                        year: 'numeric',
+                        hour: 'numeric',
+                        minute: 'numeric',
+                        hour12: true
+                    }),
+                    CreateAt: new Date(parseInt(roles.createAt.match(/\d+/)[0])).toLocaleString('en-PH', {
+                        month: 'short',
+                        day: 'numeric',
+                        year: 'numeric',
+                        hour: 'numeric',
+                        minute: 'numeric',
+                        hour12: true
+                    }),
+                }));
+                initRolesTable();
+            } else {
+                console.error('Failed to load accounts:', response.data.message);
+            }
+        }).catch(error => {
+            console.error('Error loading accounts:', error);
+        });
+    };
+
+    function initRolesTable() {
+        if (typeof $ !== 'undefined' && $.fn.DataTable) {
+            setTimeout(function () {
+                $('#rolesTable').DataTable({
+                    destroy: true,
+                    paging: true,
+                    searching: true,
+                    ordering: true,
+                    responsive: true,
+                    autoWidth: false,
+                    fixedHeader: true,
+                    pageLength: 50,
+                    columns: [
+                        { title: "Role ID" },
+                        { title: "Role Name" },
+                        { title: "Last Updated" },
+                        { title: "Created" },
+                        { title: "Action" }
+                    ],
+                })
+            });
+        } else {
+            console.error('jQuery or DataTables is not loaded.');
+        }
+    }
+
+    $scope.getDisbursement = function () {
+        LoaningApplicationService.getDisbursement().then(function (response) {
+            if (response.data.success) {
+                $scope.disbursement = response.data.data.map(disburse => ({
+                    DisbursementID: disburse.disbursementID,
+                    LoanID: disburse.loanID,
+                    DisbursementDate: new Date(parseInt(disburse.disbursementDate.match(/\d+/)[0])).toLocaleString('en-PH', {
+                        month: 'short',
+                        day: 'numeric',
+                        year: 'numeric',
+                        hour: 'numeric',
+                        minute: 'numeric',
+                        hour12: true
+                    }),
+                    DisbursedAmount: disburse.disbursedAmount,
+                    DisbursementMethod: disburse.disbursementMethod,
+                    UpdateAt: new Date(parseInt(disburse.updateAt.match(/\d+/)[0])).toLocaleString('en-PH', {
+                        month: 'short',
+                        day: 'numeric',
+                        year: 'numeric',
+                        hour: 'numeric',
+                        minute: 'numeric',
+                        hour12: true
+                    }),
+                    CreateAt: new Date(parseInt(disburse.createAt.match(/\d+/)[0])).toLocaleString('en-PH', {
+                        month: 'short',
+                        day: 'numeric',
+                        year: 'numeric',
+                        hour: 'numeric',
+                        minute: 'numeric',
+                        hour12: true
+                    }),
+                }));
+                initDisbursementTable();
+            } else {
+                console.error('Failed to load accounts:', response.data.message);
+            }
+        }).catch(error => {
+            console.error('Error loading accounts:', error);
+        });
+    };
+
+    function initDisbursementTable() {
+        if (typeof $ !== 'undefined' && $.fn.DataTable) {
+            setTimeout(function () {
+                $('#disbursementTable').DataTable({
+                    destroy: true,
+                    paging: true,
+                    searching: true,
+                    ordering: true,
+                    responsive: true,
+                    autoWidth: false,
+                    fixedHeader: true,
+                    pageLength: 50,
+                    columns: [
+                        { title: "Disbursement ID" },
+                        { title: "Loan ID" },
+                        { title: "Disbursement Date" },
+                        { title: "Disbursed Amount" },
+                        { title: "Disbursement Method" },
+                        { title: "Last Updated" },
+                        { title: "Created" },
+                        { title: "Action" }
+                    ],
+                })
+            });
+        } else {
+            console.error('jQuery or DataTables is not loaded.');
+        }
+    }
+
+    $scope.getLoanStatus = function () {
+        LoaningApplicationService.getLoanStatus().then(function (response) {
+            if (response.data.success) {
+                $scope.loanstat = response.data.data.map(loanstatus => ({
+                    LoanStatusID: loanstatus.loanstatusID,
+                    LoanStatusName: loanstatus.loanstatusName,
+                    UpdateAt: new Date(parseInt(loanstatus.updateAt.match(/\d+/)[0])).toLocaleString('en-PH', {
+                        month: 'short',
+                        day: 'numeric',
+                        year: 'numeric',
+                        hour: 'numeric',
+                        minute: 'numeric',
+                        hour12: true
+                    }),
+                    CreateAt: new Date(parseInt(loanstatus.createAt.match(/\d+/)[0])).toLocaleString('en-PH', {
+                        month: 'short',
+                        day: 'numeric',
+                        year: 'numeric',
+                        hour: 'numeric',
+                        minute: 'numeric',
+                        hour12: true
+                    }),
+                }));
+                initLoanStatusTable();
+            } else {
+                console.error('Failed to load accounts:', response.data.message);
+            }
+        }).catch(error => {
+            console.error('Error loading accounts:', error);
+        });
+    };
+
+    function initLoanStatusTable() {
+        if (typeof $ !== 'undefined' && $.fn.DataTable) {
+            setTimeout(function () {
+                $('#loanstatusTable').DataTable({
+                    destroy: true,
+                    paging: true,
+                    searching: true,
+                    ordering: true,
+                    responsive: true,
+                    autoWidth: false,
+                    fixedHeader: true,
+                    pageLength: 50,
+                    columns: [
+                        { title: "LoanStatus ID" },
+                        { title: "Loan Status" },
+                        { title: "Last Updated" },
+                        { title: "Created" },
+                        { title: "Action" }
+                    ],
+                })
+            });
+        } else {
+            console.error('jQuery or DataTables is not loaded.');
+        }
+    }
+
+    $scope.getLogs = function () {
+        LoaningApplicationService.getLogs().then(function (response) {
+            if (response.data.success) {
+                $scope.log = response.data.data.map(logs => ({
+                    ActionID: logs.actionID,
+                    AccountID: logs.accountID,
+                    ActionDesc: logs.actionDesc,
+                    ActionDate: new Date(parseInt(logs.actionDate.match(/\d+/)[0])).toLocaleString('en-PH', {
+                        month: 'short',
+                        day: 'numeric',
+                        year: 'numeric',
+                        hour: 'numeric',
+                        minute: 'numeric',
+                        hour12: true
+                    })
+                }));
+                initLogsTable();
+            } else {
+                console.error('Failed to load accounts:', response.data.message);
+            }
+        }).catch(error => {
+            console.error('Error loading accounts:', error);
+        });
+    };
+
+    function initLogsTable() {
+        if (typeof $ !== 'undefined' && $.fn.DataTable) {
+            setTimeout(function () {
+                $('#logsTable').DataTable({
+                    destroy: true,
+                    paging: true,
+                    searching: true,
+                    ordering: true,
+                    responsive: true,
+                    autoWidth: false,
+                    fixedHeader: true,
+                    pageLength: 50,
+                    columns: [
+                        { title: "Action ID" },
+                        { title: "Account Email" },
+                        { title: "Action Description" },
+                        { title: "Action Date" }
+                    ],
+                })
+            });
+        } else {
+            console.error('jQuery or DataTables is not loaded.');
+        }
+    }
 });

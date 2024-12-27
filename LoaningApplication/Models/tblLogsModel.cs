@@ -11,7 +11,5 @@ namespace LoaningApplication.Models
         public int? accountID { get; set; } 
         public string actionDesc { get; set; }
         public DateTime actionDate { get; set; }
-        public DateTime createAt { get; set; }
-        public DateTime? updateAt { get; set; }
     }
 }

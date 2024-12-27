@@ -11,5 +11,6 @@ namespace LoaningApplication.Models
         public string loanstatusName { get; set; }
         public DateTime createAt { get; set; }
         public DateTime? updateAt { get; set; }
+        public int Archived { get; set; }
     }
 }
