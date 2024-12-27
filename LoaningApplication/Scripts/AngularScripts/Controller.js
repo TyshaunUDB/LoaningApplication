@@ -116,7 +116,7 @@
     }
 
     $scope.regSession = function () {
-        loginInfo.push($scope.loginEmail);
+        loginInfo.push($scope.uEmail);
         var sessionString = (loginInfo)
         sessionStorage.setItem("logged in", sessionString);
     }
@@ -240,5 +240,117 @@
         var deleteAccID = $scope.editAccID;
         var postData = LoaningApplicationService.deleteAcc(deleteAccID);
         window.location.href = "/Home/Accounts";
+    }
+
+    $scope.appOpen = function () {
+
+        var getInfo = sessionStorage.getItem("logged in");
+        LoaningApplicationService.loanExist(getInfo).then(function (ReturnedData) {
+            var returnValue = Number(ReturnedData.data);
+            if (returnValue == 1) {
+                Swal.fire({ title: "Error", text: "You already have an active loan!", icon: "error" });
+            }
+            else {
+                var LoanAmount = $scope.loanAmount;
+                var LoanMonths = $scope.loanMonths;
+
+                const modalElement = document.getElementById('appModal');
+                const modalInstance = M.Modal.init(modalElement);
+                modalInstance.open();
+            }
+        });
+    }
+
+    $scope.loggedinData = function () {
+        var getInfo = sessionStorage.getItem("logged in");
+        LoaningApplicationService.loggedinData(getInfo).then(function (response) {
+            if (response.data.success) {
+                $scope.loggedinusers = response.data.data.map(loggedInAcc => ({
+                    FirstName: loggedInAcc.firstName,
+                    MiddleName: loggedInAcc.middleName,
+                    LastName: loggedInAcc.lastName,
+                    EmailAddress: loggedInAcc.emailAddress,
+                    PhoneNumber: loggedInAcc.phoneNumber,
+                    BirthDate: new Date(parseInt(loggedInAcc.birthDate.match(/\d+/)[0])).toLocaleString('en-PH', {
+                        month: 'short',
+                        day: 'numeric',
+                        year: 'numeric'
+                    }),
+                    Address: loggedInAcc.Address
+                }));
+            } else {
+                console.error('Failed to load account data:', response.data.message);
+            }
+        }).catch(error => {
+            console.error('Error loading account data:', error);
+        });
+    };
+    $scope.loanInfo = function () {
+        var getInfo = sessionStorage.getItem("logged in");
+        LoaningApplicationService.loanInfo(getInfo).then(function (response) {
+            if (response.data.success) {
+                $scope.loggedinusers = response.data.data.map(loggedInAcc => ({
+                    FirstName: loggedInAcc.firstName,
+                    MiddleName: loggedInAcc.middleName,
+                    LastName: loggedInAcc.lastName,
+                    EmailAddress: loggedInAcc.emailAddress,
+                    PhoneNumber: loggedInAcc.phoneNumber,
+                    BirthDate: new Date(parseInt(loggedInAcc.birthDate.match(/\d+/)[0])).toLocaleString('en-PH', {
+                        month: 'short',
+                        day: 'numeric',
+                        year: 'numeric'
+                    }),
+                    Address: loggedInAcc.Address
+                }));
+            } else {
+                console.error('Failed to load account data:', response.data.message);
+            }
+        }).catch(error => {
+            console.error('Error loading account data:', error);
+        });
+    };
+
+    $scope.getGovID = function (input) {
+        $scope.$apply(function () {
+            $scope.govID = input.files[0];
+        });
+        console.log($scope.govID)
+    };
+    $scope.getCompID = function (input) {
+        $scope.$apply(function () {
+            $scope.compID = input.files[0];
+        });
+    };
+    $scope.getPayslip = function (input) {
+        $scope.$apply(function () {
+            $scope.paySlip = input.files[0];
+        });
+        $scope.$apply(function () {
+            $scope.sssTin = input.files[0];
+        });
+    };
+    $scope.getSSSTin = function (input) {
+        $scope.$apply(function () {
+            $scope.sssTin = input.files[0];
+        });
+    };
+
+    $scope.loanApply = function () {
+        var formData = new FormData();
+
+        formData.append("email", sessionStorage.getItem("logged in"));
+        formData.append("LoanAmount", $scope.loanAmount);
+        formData.append("LoanMonths", $scope.loanMonths);
+        formData.append("GovID", $scope.govID);
+        formData.append("CompanyID", $scope.compID);
+        formData.append("Payslip", $scope.paySlip);
+        formData.append("SSSTin", $scope.sssTin);
+        console.log($scope.loanAmount);
+
+        LoaningApplicationService.loanApply(formData).then(function (response) {
+            window.location.href = "/Home/UserLandingPage";
+        }).catch(function (error) {
+            console.error('Error submitting loan application:', error);
+        });
     }
 });

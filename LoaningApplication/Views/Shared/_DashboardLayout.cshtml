@@ -147,11 +147,11 @@
         </div>
     </div>
 
-    <ul id="slide-out" class="sidenav sidenav-fixed">
+    <ul id="slide-out" class="sidenav sidenav-fixed" ng-init="loggedinData()">
         <li>
             <div class="user-view">
                 <a><img class="circle" src="~/Content/account.png"></a>
-                <a><span class="black-text name">John Doe</span></a>
+                <a><span class="black-text name">{{loggedinusers[0].FirstName}} {{loggedinusers[0].MiddleName}} {{loggedinusers[0].LastName}}</span></a>
             </div>
         </li>
         <div class="divider"></div>

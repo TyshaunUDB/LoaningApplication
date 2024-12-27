@@ -107,14 +107,14 @@
     </div>
 </div>
 
-<div id="accDetails" class="modal">
+<div id="accDetails" class="modal" ng-init="loggedinData()">
     <div class="modal-content">
         <h4>Account Details</h4>
-        <p>Name:</p>
-        <p>Birthday:</p>
-        <p>Email:</p>
-        <p>Phone:</p>
-        <p>Address:</p>
+        <p><b>Name:</b> {{loggedinusers[0].FirstName}} {{loggedinusers[0].MiddleName}} {{loggedinusers[0].LastName}}</p>
+        <p><b>Birthday:</b> {{loggedinusers[0].BirthDate}}</p>
+        <p><b>Email:</b> {{loggedinusers[0].EmailAddress}}</p>
+        <p><b>Phone:</b> {{loggedinusers[0].PhoneNumber}}</p>
+        <p><b>Address:</b> {{loggedinusers[0].Address}}</p>
     </div>
     <div class="modal-footer">
         <a href="#!" class="modal-close waves-effect waves-green btn-flat">CLOSE</a>
@@ -178,6 +178,63 @@
     </nav>
 </div>
 
+<div id="appModal" class="modal">
+    <div class="modal-content">
+        <h4>Loan Application</h4>
+        <div class="col s12 m12 l12" style="margin-top: 50px;">
+            <div class="file-field input-field">
+                <div class="btn bg-primary-color">
+                    <span>File</span>
+                    <input type="file" ng-model="govID" onchange="angular.element(this).scope().getGovID(this)" required>
+                </div>
+                <div class="file-path-wrapper">
+                    <input id="govID" class="file-path validate" type="text" placeholder="Upload your valid government ID here">
+                </div>
+            </div>
+        </div>
+
+        <div class="col s12 m12 l12">
+            <div class="file-field input-field">
+                <div class="btn bg-primary-color">
+                    <span>File</span>
+                    <input type="file" ng-model="compID" onchange="angular.element(this).scope().getCompID(this)" required>
+                </div>
+                <div class="file-path-wrapper">
+                    <input id="compID" class="file-path validate" type="text" placeholder="Upload your company ID here">
+                </div>
+            </div>
+        </div>
+
+        <div class="col s12 m12 l12">
+            <div class="file-field input-field">
+                <div class="btn bg-primary-color">
+                    <span>File</span>
+                    <input type="file" ng-model="paySlip" onchange="angular.element(this).scope().getPayslip(this)" required>
+                </div>
+                <div class="file-path-wrapper">
+                    <input id="paySlip" class="file-path validate" type="text" placeholder="Upload your payslip here">
+                </div>
+            </div>
+        </div>
+
+        <div class="col s12 m12 l12">
+            <div class="file-field input-field">
+                <div class="btn bg-primary-color">
+                    <span>File</span>
+                    <input type="file" ng-model="sssTin" onchange="angular.element(this).scope().getSSSTin(this)" required>
+                </div>
+                <div class="file-path-wrapper">
+                    <input id="sssTin" class="file-path validate" type="text" placeholder="Upload your SSS/TIN here">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">CLOSE</a>
+        <a href="#!" class="waves-effect waves-green btn-flat" ng-click="loanApply()">SUBMIT</a>
+    </div>
+</div>
+
 <div class="section banner" id="home">
     <img src="~/Content/Banner.png" class="banner-image" alt="Banner Image" />
     <h1 class="primary-color center" style="font-family:Campton Black;">Fast Cash, No Hassle – Get Approved in Minutes</h1>
@@ -195,27 +252,22 @@
                                     <p>Please enter the amount you want to loan and months to pay</p>
                                 </div>
 
-                                <div class="col s12 m12 l12" style="margin-top: 30px;">
-                                    <div id="slider-value" class="slider-value" style="text-align: left;">Loan Amount: ₱1,000</div>
-                                    <p class="range-field">
-                                        <input type="range" id="loan-slider" min="1000" max="25000" step="500" />
-                                    </p>
+                                <div class="input-field col s6 m6 l6">
+                                    <i class="material-icons prefix">attach_money</i>
+                                    <input id="loanAmount" type="number" class="validate" style="color: black" ng-model="loanAmount" required>
+                                    <label for="loanAmount">Loan Amount</label>
+                                    <span style="color: grey">Min. 1,000 Max. 25,000</span>
                                 </div>
-                                <div class="col s6 m6 l6 label" style="text-align: left;">₱1,000</div>
-                                <div class="col s6 m6 l6 label" style="text-align: right;">₱25,000</div>
-
-                                <div class="col s12 m12 l12" style="margin-top: 20px;">
-                                    <div id="months-value" class="slider-value" style="text-align: left;">Months to Pay: 2 months</div>
-                                    <p class="range-field">
-                                        <input type="range" id="months-slider" min="2" max="12" step="1" />
-                                    </p>
+                                <div class="input-field col s6 m6 l6">
+                                    <i class="material-icons prefix">date_range</i>
+                                    <input id="loanMonths" type="number" class="validate" style="color: black" ng-model="loanMonths" required>
+                                    <label for="loanMonths">Months to Pay</label>
+                                    <span style="color: grey">Min. 2 Max. 12</span>
                                 </div>
-                                <div class="col s6 m6 l6 label" style="text-align: left;">2 months</div>
-                                <div class="col s6 m6 l6 label" style="text-align: right;">12 months</div>
 
                                 <div class="col s12 m12 l12" style="margin-top: 30px">
                                     <p class="col s6 m6 l6 center" style="margin-top: 15px">Fixed interest rate of 3%</p>
-                                    <a class="waves-effect waves-light btn-large col s6 m6 l6 button" href="#" ng-click="loanApp()">Apply now</a>
+                                    <a class="waves-effect waves-light btn-large col s6 m6 l6 button" href="#" ng-click="appOpen()">Apply now</a>
                                 </div>
                             </div>
                         </form>
@@ -376,29 +428,7 @@
 </div>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const loanSlider = document.getElementById("loan-slider");
-        const loanSliderValue = document.getElementById("slider-value");
-
-        const monthsSlider = document.getElementById("months-slider");
-        const monthsSliderValue = document.getElementById("months-value");
-
-        function commaFormat(number) {
-            return new Intl.NumberFormat().format(number);
-        }
-
-        loanSliderValue.innerText = `Loan Amount: ₱${commaFormat(loanSlider.value)}`;
-        loanSlider.addEventListener("input", function () {
-            loanSliderValue.innerText = `Loan Amount: ₱${commaFormat(loanSlider.value)}`;
-        });
-
-        monthsSliderValue.innerText = `Months to Pay: ${monthsSlider.value} months`;
-        monthsSlider.addEventListener("input", function () {
-            monthsSliderValue.innerText = `Months to Pay: ${monthsSlider.value} months`;
-        });
-    });
-
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function () { 
         var elems = document.querySelectorAll('.carousel');
         var instances = M.Carousel.init(elems, {});
     });

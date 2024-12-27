@@ -15,6 +15,10 @@ namespace LoaningApplication.Models
         public DateTime startDate { get; set; }
         public DateTime dueDate { get; set; }
         public decimal amountPaid { get; set; }
+        public string GovtIDPic { get; set; }
+        public string payslipPic { get; set; }
+        public string CompIDPic { get; set; }
+        public string tinSSS { get; set; }
         public DateTime createAt { get; set; }
         public DateTime? updateAt { get; set; }
     }

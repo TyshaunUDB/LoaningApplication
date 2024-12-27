@@ -19,7 +19,6 @@ namespace LoaningApplication.Models
 
         public virtual DbSet<tblAccountModel> tbaccount { get; set; }
         public virtual DbSet<tblAccountStatusModel> tbaccountstatus { get; set; }
-        public virtual DbSet<tblLoanApplicationModel> tbloanapplications { get; set; }
         public virtual DbSet<tblLoanDisbursementModel> tbloandisbursement { get; set; }
         public virtual DbSet<tblLoanModel> tbloan { get; set; }
         public virtual DbSet<tblLoanStatusModel> tbloanstatus { get; set; }
@@ -32,7 +31,6 @@ namespace LoaningApplication.Models
             base.OnModelCreating(modelBuilder);
             modelBuilder.Configurations.Add(new tblAccountMap());
             modelBuilder.Configurations.Add(new tblAccountStatusMap());
-            modelBuilder.Configurations.Add(new tblLoanApplicationMap());
             modelBuilder.Configurations.Add(new tblLoanDisbursementMap());
             modelBuilder.Configurations.Add(new tblLoanMap());
             modelBuilder.Configurations.Add(new tblLoanStatusMap());

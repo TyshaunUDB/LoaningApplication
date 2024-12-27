@@ -68,4 +68,33 @@
         });
         return response;
     };
+
+    this.loanExist = function (getInfo) {
+        return $http.get("/Home/loanExist", { params: { email: getInfo } });
+    };
+
+    this.loggedinData = function (getInfo) {
+        return $http({
+            method: 'GET',
+            url: '/Home/loggedinData',
+            params: {
+                email: getInfo
+            }
+        });
+    };
+    this.loanInfo = function (getInfo) {
+        return $http({
+            method: 'GET',
+            url: '/Home/loanInfo',
+            params: {
+                email: getInfo
+            }
+        });
+    };
+    this.loanApply = function (formData) {
+        return $http.post("/Home/loanApply", formData, {
+            headers: { 'Content-Type': undefined },
+            transformRequest: angular.identity
+        });
+    };
 });

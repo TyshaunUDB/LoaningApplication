@@ -113,23 +113,18 @@
                                     <p>Please enter the amount you want to loan and months to pay</p>
                                 </div>
 
-                                <div class="col s12 m12 l12" style="margin-top: 30px;">
-                                    <div id="slider-value" class="slider-value" style="text-align: left;">Loan Amount: ₱1,000</div>
-                                    <p class="range-field">
-                                        <input type="range" id="loan-slider" min="1000" max="25000" step="500" />
-                                    </p>
+                                <div class="input-field col s6 m6 l6">
+                                    <i class="material-icons prefix">attach_money</i>
+                                    <input id="loanAmount" type="number" class="validate" style="color: black" ng-model="loanAmount" required>
+                                    <label for="loanAmount">Loan Amount</label>
+                                    <span style="color: grey">Min. 1,000 Max. 25,000</span>
                                 </div>
-                                <div class="col s6 m6 l6 label" style="text-align: left;">₱1,000</div>
-                                <div class="col s6 m6 l6 label" style="text-align: right;">₱25,000</div>
-
-                                <div class="col s12 m12 l12" style="margin-top: 20px;">
-                                    <div id="months-value" class="slider-value" style="text-align: left;">Months to Pay: 2 months</div>
-                                    <p class="range-field">
-                                        <input type="range" id="months-slider" min="2" max="12" step="1" />
-                                    </p>
+                                <div class="input-field col s6 m6 l6">
+                                    <i class="material-icons prefix">date_range</i>
+                                    <input id="loanMonths" type="number" class="validate" style="color: black" ng-model="loanMonths" required>
+                                    <label for="loanMonths">Months to Pay</label>
+                                    <span style="color: grey">Min. 2 Max. 12</span>
                                 </div>
-                                <div class="col s6 m6 l6 label" style="text-align: left;">2 months</div>
-                                <div class="col s6 m6 l6 label" style="text-align: right;">12 months</div>
 
                                 <div class="col s12 m12 l12" style="margin-top: 30px">
                                     <p class="col s6 m6 l6 center" style="margin-top: 15px">Fixed interest rate of 3%</p>
@@ -294,28 +289,6 @@
 </div>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const loanSlider = document.getElementById("loan-slider");
-        const loanSliderValue = document.getElementById("slider-value");
-
-        const monthsSlider = document.getElementById("months-slider");
-        const monthsSliderValue = document.getElementById("months-value");
-
-        function commaFormat(number) {
-            return new Intl.NumberFormat().format(number);
-        }
-
-        loanSliderValue.innerText = `Loan Amount: ₱${commaFormat(loanSlider.value)}`;
-        loanSlider.addEventListener("input", function () {
-            loanSliderValue.innerText = `Loan Amount: ₱${commaFormat(loanSlider.value)}`;
-        });
-
-        monthsSliderValue.innerText = `Months to Pay: ${monthsSlider.value} months`;
-        monthsSlider.addEventListener("input", function () {
-            monthsSliderValue.innerText = `Months to Pay: ${monthsSlider.value} months`;
-        });
-    });
-
     document.addEventListener('DOMContentLoaded', function () {
         var elems = document.querySelectorAll('.carousel');
         var instances = M.Carousel.init(elems, {});

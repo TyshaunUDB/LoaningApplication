@@ -1,10 +1,13 @@
 ﻿using LoaningApplication.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
+using System.Xml.Linq;
 
 namespace LoaningApplication.Controllers
 {
@@ -164,6 +167,133 @@ namespace LoaningApplication.Controllers
                     exists.updateAt = DateTime.Now;
                     db.SaveChanges();
                 }
+            }
+        }
+
+        public int loanExist(String email)
+        {
+            using (var db = new LoaningContext())
+            {
+                var accID = db.tbaccount.FirstOrDefault(s => s.emailAddress == email).accountID;
+                var checkActive = db.tbloan.Where(x => x.accountID == accID && x.statusID == 1).FirstOrDefault();
+                var checkPending = db.tbloan.Where(y => y.accountID == accID && y.statusID == 3).FirstOrDefault();
+                if (checkActive == null || checkPending == null)
+                {
+                    return 0;
+                }
+                else
+                {
+                    return 1;
+                }
+            }
+        }
+
+        [HttpGet]
+        public JsonResult loggedinData(String email)
+        {
+            try
+            {
+                using (var db = new LoaningContext())
+                {
+                    var loggedInAcc = db.tbaccount.Where(x => x.emailAddress == email).Select(a => new
+                    {
+                        a.firstName,
+                        a.middleName,
+                        a.lastName,
+                        a.emailAddress,
+                        a.phoneNumber,
+                        a.birthDate,
+                        a.Address
+                    }).ToList();
+
+                    return Json(new { success = true, data = loggedInAcc }, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpGet]
+        public JsonResult loanInfo(String email)
+        {
+            try
+            {
+                using (var db = new LoaningContext())
+                {
+                    var loggedInAcc = db.tbaccount.Where(x => x.emailAddress == email).Select(a => new
+                    {
+                        a.firstName,
+                        a.middleName,
+                        a.lastName,
+                        a.emailAddress,
+                        a.phoneNumber,
+                        a.birthDate,
+                        a.Address
+                    }).ToList();
+
+                    return Json(new { success = true, data = loggedInAcc }, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public void loanApply(string email, int LoanAmount, int LoanMonths, HttpPostedFileBase GovID, HttpPostedFileBase CompanyID, HttpPostedFileBase Payslip, HttpPostedFileBase SSSTin)
+        {
+            string uploadsFolder = Server.MapPath("~/Images");
+            if (!Directory.Exists(uploadsFolder))
+            {
+                Directory.CreateDirectory(uploadsFolder);
+            }
+
+            if (GovID != null)
+            {
+                string govIDFilePath = Path.Combine(uploadsFolder, Path.GetFileName(GovID.FileName));
+                GovID.SaveAs(govIDFilePath);
+            }
+
+            if (CompanyID != null)
+            {
+                string compIDFilePath = Path.Combine(uploadsFolder, Path.GetFileName(CompanyID.FileName));
+                CompanyID.SaveAs(compIDFilePath);
+            }
+
+            if (Payslip != null)
+            {
+                string paySlipFilePath = Path.Combine(uploadsFolder, Path.GetFileName(Payslip.FileName));
+                Payslip.SaveAs(paySlipFilePath);
+            }
+
+            if (SSSTin != null)
+            {
+                string sssTinFilePath = Path.Combine(uploadsFolder, Path.GetFileName(SSSTin.FileName));
+                SSSTin.SaveAs(sssTinFilePath);
+            }
+
+            using (var db = new LoaningContext())
+            {
+                var accID = db.tbaccount.FirstOrDefault(s => s.emailAddress == email).accountID;
+                var addLoanApplication = new tblLoanModel
+                {
+                    accountID = accID,
+                    statusID = 3,
+                    loanAmount = LoanAmount,
+                    loanTerm = LoanMonths,
+                    startDate = DateTime.Now,
+                    dueDate = DateTime.Now,
+                    GovtIDPic = GovID != null ? "/Images/" + Path.GetFileName(GovID.FileName) : null,
+                    CompIDPic = CompanyID != null ? "/Images/" + Path.GetFileName(CompanyID.FileName) : null,
+                    payslipPic = Payslip != null ? "/Images/" + Path.GetFileName(Payslip.FileName) : null,
+                    tinSSS = SSSTin != null ? "/Images/" + Path.GetFileName(SSSTin.FileName) : null,
+                    createAt = DateTime.Now,
+                    updateAt = DateTime.Now
+                };
+                db.tbloan.Add(addLoanApplication);
+                db.SaveChanges();
             }
         }
     }

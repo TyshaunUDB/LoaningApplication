@@ -196,8 +196,6 @@
     <Compile Include="Models\tblAccountModel.cs" />
     <Compile Include="Models\tblAccountStatusMap.cs" />
     <Compile Include="Models\tblAccountStatusModel.cs" />
-    <Compile Include="Models\tblLoanApplicationMap.cs" />
-    <Compile Include="Models\tblLoanApplicationModel.cs" />
     <Compile Include="Models\tblLoanDisbursementMap.cs" />
     <Compile Include="Models\tblLoanDisbursementModel.cs" />
     <Compile Include="Models\tblLoanMap.cs" />
