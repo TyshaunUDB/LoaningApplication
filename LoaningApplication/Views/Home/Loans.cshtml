@@ -1,0 +1,135 @@
+﻿@{
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+
+@*<div id="deleteConfirm" class="modal">
+    <div class="modal-content">
+        <h4>Delete Account</h4>
+        <p>Are you sure you want to delete?</p>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">NO</a>
+        <a class="red waves-effect waves-green btn-flat" ng-click="deleteAcc()">YES</a>
+    </div>
+</div>
+
+<div id="editAccModal" class="modal">
+    <div class="modal-content">
+        <h4>Edit Account</h4>
+        <form class="col s12 m12 l12">
+            <div class="row">
+                <div class="input-field col s4 m4 l4">
+                    <i class="material-icons prefix">account_circle</i>
+                    <input id="firstName" type="text" class="validate active" style="color: black" ng-model="editFirstName" required>
+                    <label for="firstName">First Name</label>
+                </div>
+                <div class="input-field col s4 m4 l4">
+                    <input id="middleName" type="text" class="validate" style="color: black" ng-model="editMiddleName">
+                    <label for="middleName">Middle Name</label>
+                </div>
+                <div class="input-field col s4 m4 l4">
+                    <input id="lastName" type="text" class="validate" style="color: black" ng-model="editLastName" required>
+                    <label for="lastName">Last Name</label>
+                </div>
+                <div class="input-field col s6 m6 l6">
+                    <i class="material-icons prefix">phone</i>
+                    <input id="userPhone" type="tel" class="validate" style="color: black" ng-model="editPhone" required>
+                    <label for="userPhone">Phone No.</label>
+                </div>
+                <div class="input-field col s6 m6 l6">
+                    <i class="material-icons prefix">date_range</i>
+                    <input id="userBirthdate" type="text" class="datepicker" style="color: black" ng-model="editBirthday" required>
+                    <label for="userBirthdate">Birthday</label>
+                </div>
+                <div class="input-field col s12 m12 l12">
+                    <i class="material-icons prefix">location_city</i>
+                    <input id="userAddress" type="text" class="validate" style="color: black" ng-model="editAddress" required>
+                    <label for="userAddress">Address</label>
+                </div>
+                <div class="input-field col s6 m6 l6">
+                </div>
+                <div class="input-field col s6 m6 l6">
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <a href="#deleteConfirm" class="modal-trigger modal-close waves-effect waves-green btn-flat" style="color: red;">Delete</a>
+        <a href="#!" class="waves-effect waves-green btn-flat" ng-click="updateAcc()">Save</a>
+    </div>
+</div>*@
+
+<div class="row">
+    <div class="col s12 m12 l12" style="margin-top: 100px">
+        <div class="table-container" ng-init="getLoans()">
+
+            <div class="left-align">
+                <a class="button waves-effect waves-light btn"><i class="material-icons left">add</i>ADD</a>
+            </div>
+
+            <table id="loansTable" class="display">
+                <thead>
+                    <tr>
+                        <th>Loan ID</th>
+                        <th>Applicant Email</th>
+                        <th>Status</th>
+                        <th>Amount</th>
+                        <th>Term</th>
+                        <th>Start Date</th>
+                        <th>Next Due Date</th>
+                        <th>Amount Paid</th>
+                        <th>Documents</th>
+                        <th>Last Updated</th>
+                        <th>Created</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="list in loans">
+                        <td>{{list.LoanID}}</td>
+                        <td>{{list.Email}}</td>
+                        <td>{{list.Status}}</td>
+                        <td>{{list.LoanAmount}}</td>
+                        <td>{{list.LoanTerm}}</td>
+                        <td>{{list.StartDate}}</td>
+                        <td>{{list.DueDate}}</td>
+                        <td>{{list.AmountPaid}}</td>
+                        <td>
+                            <div class="row" style="display: flex; justify-content: center; align-items: center; gap: 10px;">
+                                <div class="col" style="text-align: center;">
+                                    <img class="materialboxed" width="50" src="{{list.GovID}}">
+                                </div>
+                                <div class="col" style="text-align: center;">
+                                    <img class="materialboxed" width="50" src="{{list.CompID}}">
+                                </div>
+                            </div>
+                            <div class="row" style="display: flex; justify-content: center; align-items: center; gap: 10px;">
+                                <div class="col" style="text-align: center;">
+                                    <img class="materialboxed" width="50" src="{{list.PaySlip}}">
+                                </div>
+                                <div class="col" style="text-align: center;">
+                                    <img class="materialboxed" width="50" src="{{list.TinSSS}}">
+                                </div>
+                            </div>
+                        </td>
+                        <td>{{list.UpdateAt}}</td>
+                        <td>{{list.CreateAt}}</td>
+                        <td>
+                            <a class="btn-flat primary-color" style="display: flex; align-items: center; text-decoration: none;" ng-click="editLoan(list)">
+                                <i class="material-icons" style="margin-right: 5px;">create</i>
+                                <span>Edit</span>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var modals = document.querySelectorAll('.modal');
+        M.Modal.init(modals);
+</script>

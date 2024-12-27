@@ -404,6 +404,7 @@
     <Content Include="Views\Home\UserLandingPage.cshtml" />
     <Content Include="Views\Home\LoanApplicationPage.cshtml" />
     <Content Include="Views\Home\Accounts.cshtml" />
+    <Content Include="Views\Home\Loans.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

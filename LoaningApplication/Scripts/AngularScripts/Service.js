@@ -97,4 +97,10 @@
             transformRequest: angular.identity
         });
     };
+    this.getLoans = function () {
+        return $http({
+            method: 'GET',
+            url: '/Home/getLoans'
+        });
+    };
 });

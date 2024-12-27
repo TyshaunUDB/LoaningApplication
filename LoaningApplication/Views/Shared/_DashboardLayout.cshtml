@@ -150,7 +150,7 @@
     <ul id="slide-out" class="sidenav sidenav-fixed" ng-init="loggedinData()">
         <li>
             <div class="user-view">
-                <a><img class="circle" src="~/Content/account.png"></a>
+                <img class="circle" src="~/Content/account.png">
                 <a><span class="black-text name">{{loggedinusers[0].FirstName}} {{loggedinusers[0].MiddleName}} {{loggedinusers[0].LastName}}</span></a>
             </div>
         </li>
@@ -163,7 +163,7 @@
         <li><a href="#!"><i class="material-icons waves-effect primary-color">person</i>Roles</a></li>
         <div class="divider"></div>
         <li><a class="subheader">LOAN</a></li>
-        <li><a href="#!"><i class="material-icons waves-effect primary-color">attach_money</i>Loans</a></li>
+        <li><a href="/Home/Loans"><i class="material-icons waves-effect primary-color">attach_money</i>Loans</a></li>
         <li><a href="#!"><i class="material-icons waves-effect primary-color">monetization_on</i>Payments</a></li>
         <li><a href="#!"><i class="material-icons waves-effect primary-color">account_balance_wallet</i>Disbursements</a></li>
         <li><a href="#!"><i class="material-icons waves-effect primary-color">equalizer</i>Status</a></li>
@@ -223,5 +223,10 @@
             // Toggle the visibility
             column.visible(!column.visible());
         });
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var elems = document.querySelectorAll('.materialboxed');
+        var instances = M.Materialbox.init(elems, {});
     });
 </script>

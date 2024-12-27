@@ -42,6 +42,10 @@ namespace LoaningApplication.Controllers
         {
             return View();
         }
+        public ActionResult Loans()
+        {
+            return View();
+        }
         public int logIn(string loginEmail, string loginPass) { 
             using (var db = new LoaningContext())
             {
@@ -294,6 +298,38 @@ namespace LoaningApplication.Controllers
                 };
                 db.tbloan.Add(addLoanApplication);
                 db.SaveChanges();
+            }
+        }
+        public JsonResult getLoans()
+        {
+            try
+            {
+                using (var db = new LoaningContext())
+                {
+                    var loanList = db.tbloan.Select(a => new
+                    {
+                        a.loanID,
+                        a.accountID,
+                        a.statusID,
+                        a.loanAmount,
+                        a.loanTerm,
+                        a.startDate,
+                        a.dueDate,
+                        a.amountPaid,
+                        a.GovtIDPic,
+                        a.CompIDPic,
+                        a.payslipPic,
+                        a.tinSSS,
+                        a.updateAt,
+                        a.createAt,
+                    }).ToList();
+
+                    return Json(new { success = true, data = loanList }, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
             }
         }
     }

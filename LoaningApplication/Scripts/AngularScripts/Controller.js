@@ -314,7 +314,6 @@
         $scope.$apply(function () {
             $scope.govID = input.files[0];
         });
-        console.log($scope.govID)
     };
     $scope.getCompID = function (input) {
         $scope.$apply(function () {
@@ -345,7 +344,6 @@
         formData.append("CompanyID", $scope.compID);
         formData.append("Payslip", $scope.paySlip);
         formData.append("SSSTin", $scope.sssTin);
-        console.log($scope.loanAmount);
 
         LoaningApplicationService.loanApply(formData).then(function (response) {
             window.location.href = "/Home/UserLandingPage";
@@ -353,4 +351,94 @@
             console.error('Error submitting loan application:', error);
         });
     }
+    $scope.getLoans = function () {
+        LoaningApplicationService.getLoans().then(function (response) {
+            if (response.data.success) {
+                $scope.loans = response.data.data.map(loanList => ({
+                    LoanID: loanList.accountID,
+                    Email: loanList.accountID,
+                    Status: loanList.statusID,
+                    LoanAmount: loanList.loanAmount,
+                    LoanTerm: loanList.loanTerm,
+                    StartDate: new Date(parseInt(loanList.startDate.match(/\d+/)[0])).toLocaleString('en-PH', {
+                        month: 'short',
+                        day: 'numeric',
+                        year: 'numeric'
+                    }),
+                    DueDate: new Date(parseInt(loanList.dueDate.match(/\d+/)[0])).toLocaleString('en-PH', {
+                        month: 'short',
+                        day: 'numeric',
+                        year: 'numeric'
+                    }),
+                    AmountPaid: loanList.amountPaid,
+                    GovID: loanList.GovtIDPic,
+                    CompID: loanList.CompIDPic,
+                    PaySlip: loanList.payslipPic,
+                    TinSSS: loanList.tinSSS,
+                    UpdateAt: loanList.updateAt,
+                    CreateAt: loanList.createAt,
+                    UpdateAt: new Date(parseInt(loanList.updateAt.match(/\d+/)[0])).toLocaleString('en-PH', {
+                        month: 'short',
+                        day: 'numeric',
+                        year: 'numeric',
+                        hour: 'numeric',
+                        minute: 'numeric',
+                        hour12: true
+                    }),
+                    CreateAt: new Date(parseInt(loanList.createAt.match(/\d+/)[0])).toLocaleString('en-PH', {
+                        month: 'short',
+                        day: 'numeric',
+                        year: 'numeric',
+                        hour: 'numeric',
+                        minute: 'numeric',
+                        hour12: true
+                    }),
+                }));
+                initLoansTable();
+            } else {
+                console.error('Failed to load loans:', response.data.message);
+            }
+        }).catch(error => {
+            console.error('Error loading loans:', error);
+        });
+    };
+
+    function initLoansTable() {
+        if (typeof $ !== 'undefined' && $.fn.DataTable) {
+            setTimeout(function () {
+                $('#loansTable').DataTable({
+                    destroy: true,
+                    paging: true,
+                    searching: true,
+                    ordering: true,
+                    responsive: true,
+                    autoWidth: false,
+                    fixedHeader: true,
+                    pageLength: 50,
+                    columns: [
+                        { title: "Loan ID" },
+                        { title: "Applicant Email" },
+                        { title: "Status" },
+                        { title: "Amount" },
+                        { title: "Term" },
+                        { title: "Start Date" },
+                        { title: "Next Due Date" },
+                        { title: "Amount Paid" },
+                        { title: "Documents" },
+                        { title: "Last Updated" },
+                        { title: "Created" },
+                        { title: "Action" }
+                    ],
+                })
+            });
+        } else {
+            console.error('jQuery or DataTables is not loaded.');
+        }
+    }
+
+    $scope.$watch('loans', function () {
+        setTimeout(function () {
+            M.Materialbox.init(document.querySelectorAll('.materialboxed'));
+        }, 0);
+    });
 });
